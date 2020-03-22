@@ -1,6 +1,11 @@
-#include<iostream>
+#include "Log/Log.h"
 
-int main(int argc, char* argv)
+int main()
 {
-	return 0;
+	LOG_MESSAGE("Log Message works!")
+	LOG_SUCCESS("Log Success works!")
+	LOG_WARNING("Log Warning works!")
+	LOG_ERROR("Log Error works!")
+	
+	std::cin.get();
 }
