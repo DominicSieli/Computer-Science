@@ -33,7 +33,7 @@ project "Computer-Science"
 	
 	includedirs
 	{
-		"%{prj.name}/Source",
+		"%{prj.name}/Source"
 	}
 	
 	filter "system:windows"
