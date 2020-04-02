@@ -21,46 +21,45 @@ namespace DataStructures
 
 		~Stack()
 		{
-			delete[] this->stack;
+			delete[] stack;
 		}
 
 		unsigned int Count() const
 		{
-			return this->count;
+			return count;
 		}
 
-		void Push(const T& v)
+		void Push(const T& element)
 		{
-			this->count++;
+			count++;
 
-			if (this->count > this->size)
+			if(count > size)
 			{
-				this->size++;
-				T* newStack = new T[this->size];
-				memcpy(newStack, this->stack, this->count * sizeof(T));
+				size++;
+				T* newStack = new T[size];
+				memcpy(newStack, stack, count * sizeof(T));
 
-				delete[] this->stack;
-				this->stack = newStack;
+				delete[] stack;
+				stack = newStack;
 			}
 
-			this->stack[this->count - 1] = v;
+			stack[count - 1] = element;
 		}
 
 		T Pop()
 		{
-			count--;
-			return this->stack[count];
+			if(count > 0)
+			{
+				count--;
+				return stack[count + 1];
+			}
 		}
 
-		T TopElement() const
+		T Top() const
 		{
-			if(this->count == 0)
+			if(count > 0)
 			{
-				return this->stack[0];
-			}
-			else
-			{
-				return this->stack[this->count - 1];
+				return stack[count];
 			}
 		}
 	};

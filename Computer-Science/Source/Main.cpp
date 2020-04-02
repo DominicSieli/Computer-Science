@@ -1,24 +1,21 @@
 #include "Log.h"
-#include "StackExample.h"
+#include "DataStructures.h"
 
 int main()
 {
-	Stack<int> stack(3);
+	DataStructures::Stack<int> stack(10);
 
-	stack.Push(1);
-	stack.Push(2);
+	for(int i = 0; i < 10; i++)
+	{
+		stack.Push(i);
+	}
 
-	stack.Pop();
-	stack.Pop();
-
-	stack.Push(3);
-
-	LOG("Top element is: " + stack.Peek())
-	LOG("Stack size is " + stack.Size())
-
-	stack.Pop();
-
-	if(stack.IsEmpty() == true)
+	for(int i = 0; i < stack.Count(); i++)
+	{
+		std::cout << stack.Pop() << std::endl;
+	}
+	
+	if(stack.Count() == 0)
 	{
 		LOG("Stack Is Empty")
 	}
