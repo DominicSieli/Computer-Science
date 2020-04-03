@@ -5,35 +5,34 @@
 namespace DataStructures
 {
 	template<typename T>
-	struct Stack
+	struct DynamicArrayStack
 	{
 		T* stack = nullptr;
 		unsigned int size = 0;
 		unsigned int count = 0;
 
-		Stack(const unsigned int& n) :
-			stack{ new T[n] },
-			size{ n },
-			count{ 0 }
+		DynamicArrayStack(const unsigned int& n) :
+			stack{ new T[n + 1] },
+			size{ n + 1 }
 		{
-
+			
 		}
 
-		~Stack()
+		~DynamicArrayStack()
 		{
 			delete[] stack;
 		}
 
-		unsigned int Count() const
+		bool IsEmpty() const
 		{
-			return count;
+			return count == 0;
 		}
 
 		void Push(const T& element)
 		{
 			count++;
 
-			if(count > size)
+			if(count + 1 > size)
 			{
 				size++;
 				T* newStack = new T[size];
@@ -43,24 +42,17 @@ namespace DataStructures
 				stack = newStack;
 			}
 
-			stack[count - 1] = element;
+			stack[count] = element;
 		}
 
 		T Pop()
 		{
-			if(count > 0)
-			{
-				count--;
-				return stack[count + 1];
-			}
+			return stack[count--];
 		}
 
 		T Top() const
 		{
-			if(count > 0)
-			{
-				return stack[count];
-			}
+			return stack[count];
 		}
 	};
 }
