@@ -1,11 +1,11 @@
 #include "Log.h"
-#include "DataStructures.h"
+#include "DataStructures/ArrayNodeStack.h"
 
 int main()
 {
-	DataStructures::DynamicArrayStack<int> stack(10);
+	DataStructures::ArrayNodeStack<int> stack(10);
 
-	for(int i = 0; i < 10; i++)
+	for(int i = 0; i < 100; i++)
 	{
 		stack.Push(i);
 	}
