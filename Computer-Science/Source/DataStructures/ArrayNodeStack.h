@@ -1,84 +1,91 @@
 #pragma once
 
+#include "NodeArray.h"
+
 namespace DataStructures
 {
-	template<typename T>
-	struct ArrayNode
-	{
-		const unsigned int size = 0;
-
-		const T* array = nullptr;
-		const T* previousArray = nullptr;
-
-		ArrayNode(const unsigned int& size, const T* previousArray) :
-			size{ size },
-			array{ new T[size] },
-			previousArray{ previousArray }
-		{
-
-		}
-
-		~ArrayNode
-		{
-			delete[] this->array;
-		}
-	};
-
 	template<typename T>
 	struct ArrayNodeStack
 	{
 	private:
-		T* currentNode = nullptr;
-		unsigned int count = 0;
+		T* top = nullptr;
 		unsigned int nodeCount = 0;
+		unsigned int expansionSize = 0;
+		ArrayNode<T> currentNode = nullptr;
+		ArrayNode<T>* previousNode = nullptr;
 
 	public:
-		ArrayNodeStack(const unsigned int& size)
+		ArrayNodeStack(const unsigned int& size, const unsigned int& expansionSize)
 		{
-			nodeCount++;
-			ArrayNode<T> node(size, nullptr);
-			currentNode = node;
+			this->nodeCount++;
+			this->expansionSize = expansionSize;
+			ArrayNode<T> currentNode = new ArrayNode<T>(size + 1, nullptr);
 		}
 
 		~ArrayNodeStack()
 		{
 			while(nodeCount > 0)
 			{
-				previousNode = currentNode->previousNode;
-				delete currentNode;
+				this->previousNode = this->currentNode.PreviousNode();
+
+				this->nodeCount--;
+				delete this->currentNode;
+				this->currentNode = this->previousNode;
 			}
 		}
 
 		bool IsEmpty() const
 		{
-			return this->count == 0;
+			if(this->top == this->currentNode && this->currentNode.PreviousNode() != nullptr)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		void Push(const T& item)
 		{
-			this->count++;
-
-			if (this->count + 1 > this->size)
+			if(this->top < (this->currentNode.Array() += this->currentNode.Size()))
 			{
-				this->size++;
-				T* newArray = new T[this->size];
-				memcpy(newArray, this->stack, this->count * sizeof(T));
-
-				delete[] this->stack;
-				this->stack = newArray;
+				this->top++;
+			}
+			else
+			{
+				this->nodeCount++;
+				ArrayNode<T> newNode = new ArrayNode<T>(this->expansionSize, this->currentNode);
+				this->currentNode = newNode;
 			}
 
-			this->stack[this->count] = item;
+			*this->top = item;
 		}
 
 		T Pop()
 		{
-			return this->stack[this->count--];
+			if(this->top > this->currentNode.Array())
+			{
+				this->top--;
+				return *this->top;
+			}
+
+			if(this->top <= this->currentNode.Array() && this->currentNode.PreviousNode() != nullptr)
+			{
+				this->previousNode = this->currentNode.PreviousNode();
+				
+				this->nodeCount--;
+				delete this->currentNode;
+				this->currentNode = this->previousNode;
+				this->top = (this->currentNode.Array() += this->currentNode.Size());
+
+				return *this->top;
+			}
 		}
 
 		T Top() const
 		{
-			return this->stack[this->count];
+			return *this->top;
 		}
 	};
 }
