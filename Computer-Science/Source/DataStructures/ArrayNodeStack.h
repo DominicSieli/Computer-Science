@@ -1,91 +1,106 @@
 #pragma once
 
-#include "NodeArray.h"
+#include "Log.h"
+#include "ArrayNode.h"
 
 namespace DataStructures
 {
 	template<typename T>
-	struct ArrayNodeStack
+	class NodeArrayStack
 	{
 	private:
-		T* top = nullptr;
+		const unsigned int size = 0;
 		unsigned int nodeCount = 0;
-		unsigned int expansionSize = 0;
-		ArrayNode<T> currentNode = nullptr;
+		T* topItemPointer = nullptr;
+		ArrayNode<T>* currentNode = nullptr;
 		ArrayNode<T>* previousNode = nullptr;
 
 	public:
-		ArrayNodeStack(const unsigned int& size, const unsigned int& expansionSize)
+		NodeArrayStack(const unsigned int& size) :
+			size{ size }
 		{
-			this->nodeCount++;
-			this->expansionSize = expansionSize;
-			ArrayNode<T> currentNode = new ArrayNode<T>(size + 1, nullptr);
+			
 		}
 
-		~ArrayNodeStack()
+		~NodeArrayStack()
 		{
-			while(nodeCount > 0)
-			{
-				this->previousNode = this->currentNode.PreviousNode();
+			ArrayNode<T>* tempNode = nullptr;
 
-				this->nodeCount--;
-				delete this->currentNode;
-				this->currentNode = this->previousNode;
+			do
+			{
+				tempNode = this->previousNode;
+				DeleteCurrentNode();
+				this->currentNode = tempNode;
 			}
+			while(currentNode != nullptr);
+		}
+
+		void inline CreateNode()
+		{
+			this->nodeCount++;
+
+			ArrayNode<T>* newNode = new ArrayNode<T>(this->size);
+
+			this->previousNode = this->currentNode;
+			this->currentNode = newNode;
+
+			LOG("Node Created")
+		}
+
+		void inline DeleteCurrentNode()
+		{
+			delete this->currentNode;
+			this->currentNode = this->previousNode;
+
+			LOG("Current Node Deleted")
 		}
 
 		bool IsEmpty() const
 		{
-			if(this->top == this->currentNode && this->currentNode.PreviousNode() != nullptr)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return this->currentNode == nullptr;
 		}
 
 		void Push(const T& item)
 		{
-			if(this->top < (this->currentNode.Array() += this->currentNode.Size()))
+			if(this->currentNode == nullptr)
 			{
-				this->top++;
+				this->CreateNode();
+			}
+
+			if(this->topItemPointer < (this->currentNode->ArrayPointer() + this->size))
+			{
+				this->topItemPointer++;
 			}
 			else
 			{
-				this->nodeCount++;
-				ArrayNode<T> newNode = new ArrayNode<T>(this->expansionSize, this->currentNode);
-				this->currentNode = newNode;
+				CreateNode();
+				this->topItemPointer = this->currentNode->ArrayPointer();
 			}
 
-			*this->top = item;
+			this->currentNode[this->topItemPointer - this->currentNode->ArrayPointer()] = item;
 		}
 
 		T Pop()
 		{
-			if(this->top > this->currentNode.Array())
+			if(this->topItemPointer != nullptr)
 			{
-				this->top--;
-				return *this->top;
-			}
-
-			if(this->top <= this->currentNode.Array() && this->currentNode.PreviousNode() != nullptr)
-			{
-				this->previousNode = this->currentNode.PreviousNode();
-				
-				this->nodeCount--;
-				delete this->currentNode;
-				this->currentNode = this->previousNode;
-				this->top = (this->currentNode.Array() += this->currentNode.Size());
-
-				return *this->top;
+				if(this->topItemPointer > this->currentNode->ArrayPointer())
+				{
+					this->topItemPointer--;
+					return *(this->topItemPointer);
+				}
+				else
+				{
+					DeleteCurrentNode();
+					this->topItemPointer = (this->currentNode->ArrayPointer() + this->size);
+					return *(this->topItemPointer);
+				}
 			}
 		}
 
 		T Top() const
 		{
-			return *this->top;
+			return *(this->topItemPointer);
 		}
 	};
 }
