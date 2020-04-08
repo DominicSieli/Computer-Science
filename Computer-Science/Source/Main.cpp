@@ -4,7 +4,7 @@
 
 int main()
 {
-	LinkedList::LinkedListStack<int> stack;
+	DataStructures::LinkedListStack<int> stack;
 
 	while(stack.Nodes() < 10000)
 	{

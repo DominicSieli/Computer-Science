@@ -1,16 +1,16 @@
 #pragma once
 
-#include "LinkedListNode.h"
+#include "DataStructures/LinkedNode.h"
 
-namespace LinkedList
+namespace DataStructures
 {
 	template<typename T>
 	class LinkedListStack
 	{
 	private:
 		unsigned int nodes = 0;
-		Node<T>* topNode = nullptr;
-		Node<T>* previousNode = nullptr;
+		LinkedNode<T>* topNode = nullptr;
+		LinkedNode<T>* previousNode = nullptr;
 
 	public:
 		~LinkedListStack()
@@ -28,7 +28,7 @@ namespace LinkedList
 		{
 			this->nodes++;
 			this->previousNode = this->topNode;
-			Node<T>* newNode = new Node<T>(data, this->topNode);
+			LinkedNode<T>* newNode = new LinkedNode<T>(data, nullptr, this->topNode);
 			this->topNode = newNode;
 		}
 
