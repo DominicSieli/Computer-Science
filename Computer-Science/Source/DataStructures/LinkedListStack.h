@@ -1,61 +1,60 @@
 #pragma once
 
-#include "Log.h"
-#include "Node.h"
+#include "LinkedListNode.h"
 
-namespace DataStructures
+namespace LinkedList
 {
 	template<typename T>
 	class LinkedListStack
 	{
 	private:
-		unsigned int count = 0;
+		unsigned int nodes = 0;
 		Node<T>* topNode = nullptr;
 		Node<T>* previousNode = nullptr;
 
 	public:
-		LinkedListStack()
-		{
-
-		}
-
 		~LinkedListStack()
 		{
-			for(unsigned int i = 0; i < this->count; i++)
+			while(this->nodes > 0)
 			{
-				if(this->topNode != nullptr)
-				{
-					this->previousNode = this->topNode;
-					delete this->topNode;
-					this->topNode = this->previousNode;
-				}
+				this->nodes--;
+				this->previousNode = this->topNode->PreviousNode();
+				delete this->topNode;
+				this->topNode = this->previousNode;
 			}
 		}
 
-		bool IsEmpty() const
+		bool IsEmpty()
 		{
-			return this->topNode == nullptr;
+			return this->nodes == 0;
 		}
 
-		void Push(const T& value)
+		void Push(const T& data)
 		{
-			this->count++;
+			this->nodes++;
 			this->previousNode = this->topNode;
-			Node<T>* newNode = new Node<T>(value, this->topNode);
+			Node<T>* newNode = new Node<T>(data, this->topNode);
 			this->topNode = newNode;
 		}
 
 		T Pop()
 		{
-			return this->topNode->Value();
+			this->nodes--;
+			T data = this->topNode->Data();
 			this->previousNode = this->topNode->PreviousNode();
 			delete this->topNode;
 			this->topNode = this->previousNode;
+			return data;
 		}
 
 		T Top() const
 		{
-			return this->topNode->Value();
+			return this->topNode->Data();
+		}
+
+		unsigned int Nodes() const
+		{
+			return this->nodes;
 		}
 	};
 }

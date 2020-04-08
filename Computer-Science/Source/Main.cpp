@@ -1,17 +1,18 @@
-#include "Log.h"
+#include <iostream>
+
 #include "DataStructures/LinkedListStack.h"
 
 int main()
 {
-	DataStructures::LinkedListStack<int> stack;
+	LinkedList::LinkedListStack<int> stack;
 
-	for(int i = 0; i < 10; i++)
+	while(stack.Nodes() < 10)
 	{
-		stack.Push(i);
+		stack.Push(stack.Nodes());
 	}
 
-	for(int i = 0; i < 10; i++)
+	while(stack.Nodes() > 0)
 	{
-		LOG(stack.Pop());
+		std::cout << stack.Pop() << std::endl;
 	}
 }
