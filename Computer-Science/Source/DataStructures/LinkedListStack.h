@@ -24,11 +24,6 @@ namespace LinkedList
 			}
 		}
 
-		bool IsEmpty()
-		{
-			return this->nodes == 0;
-		}
-
 		void Push(const T& data)
 		{
 			this->nodes++;
@@ -55,6 +50,11 @@ namespace LinkedList
 		unsigned int Nodes() const
 		{
 			return this->nodes;
+		}
+
+		bool IsEmpty() const
+		{
+			return this->nodes == 0;
 		}
 	};
 }

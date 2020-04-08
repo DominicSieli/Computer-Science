@@ -6,7 +6,7 @@ int main()
 {
 	LinkedList::LinkedListStack<int> stack;
 
-	while(stack.Nodes() < 10)
+	while(stack.Nodes() < 10000)
 	{
 		stack.Push(stack.Nodes());
 	}

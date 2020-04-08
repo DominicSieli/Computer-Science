@@ -5,10 +5,12 @@ namespace LinkedList
 	template<typename T>
 	struct Node
 	{
+	private:
 		T data;
-		Node* previousNode = nullptr;
+		Node<T>* previousNode = nullptr;
 
-		Node(const T& data, Node* previousNode) :
+	public:
+		Node(const T& data, Node<T>* previousNode) :
 			data{ data },
 			previousNode{ previousNode }
 		{
@@ -25,7 +27,7 @@ namespace LinkedList
 			return this->data;
 		}
 
-		Node* PreviousNode() const
+		Node<T>* PreviousNode() const
 		{
 			return this->previousNode;
 		}
