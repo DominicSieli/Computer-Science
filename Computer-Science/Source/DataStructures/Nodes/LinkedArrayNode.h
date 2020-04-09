@@ -6,13 +6,15 @@ namespace DataStructures
 	struct LinkedArrayNode
 	{
 	private:
-		T* arrayNode = nullptr;
+		T* data = nullptr;
+		unsigned int size = 0;
 		LinkedArrayNode* nextNode = nullptr;
 		LinkedArrayNode* previousNode = nullptr;
 
 	public:
 		LinkedArrayNode(const unsigned int& size, LinkedArrayNode<T>* nextNode, LinkedArrayNode<T>* previousNode) :
-			arrayNode{ new T[size] },
+			data{ new T[size] },
+			size{ size },
 			nextNode{ nextNode },
 			previousNode{ previousNode }
 		{
@@ -21,7 +23,12 @@ namespace DataStructures
 
 		~LinkedArrayNode()
 		{
-			delete[] this->arrayNode;
+			delete[] this->data;
+		}
+
+		unsigned int Size() const
+		{
+			return this->size;
 		}
 
 		LinkedArrayNode<T>* NextNode() const
@@ -34,14 +41,14 @@ namespace DataStructures
 			return this->previousNode;
 		}
 
-		T GetValue(const unsigned int& index) const
+		T GetData(const unsigned int& index) const
 		{
-			return this->arrayNode[index];
+			return this->data[index];
 		}
 
-		void SetValue(const unsigned int& index, const T& value)
+		void SetData(const unsigned int& index, const T& data)
 		{
-			this->arrayNode[index] = value;
+			this->data[index] = data;
 		}
 	};
 }

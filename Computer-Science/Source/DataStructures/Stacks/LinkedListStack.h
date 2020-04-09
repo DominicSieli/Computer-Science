@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DataStructures/LinkedNode.h"
+#include "DataStructures/Nodes/LinkedNode.h"
 
 namespace DataStructures
 {
@@ -50,11 +50,6 @@ namespace DataStructures
 		unsigned int Nodes() const
 		{
 			return this->nodes;
-		}
-
-		bool IsEmpty() const
-		{
-			return this->nodes == 0;
 		}
 	};
 }
