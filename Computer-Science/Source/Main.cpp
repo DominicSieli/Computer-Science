@@ -1,14 +1,14 @@
 #include <iostream>
 
-#include "DataStructures/LinkedListStack.h"
+#include "DataStructures/LinkedArrayStack.h"
 
 int main()
 {
-	DataStructures::LinkedListStack<int> stack;
+	DataStructures::LinkedArrayStack<int> stack(100);
 
-	while(stack.Nodes() < 10000)
+	for(int i = 0; i < 100; i++)
 	{
-		stack.Push(stack.Nodes());
+		stack.Push(i);
 	}
 
 	while(stack.Nodes() > 0)

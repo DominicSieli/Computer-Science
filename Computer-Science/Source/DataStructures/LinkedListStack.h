@@ -9,7 +9,7 @@ namespace DataStructures
 	{
 	private:
 		unsigned int nodes = 0;
-		LinkedNode<T>* topNode = nullptr;
+		LinkedNode<T>* currentNode = nullptr;
 		LinkedNode<T>* previousNode = nullptr;
 
 	public:
@@ -18,33 +18,33 @@ namespace DataStructures
 			while(this->nodes > 0)
 			{
 				this->nodes--;
-				this->previousNode = this->topNode->PreviousNode();
-				delete this->topNode;
-				this->topNode = this->previousNode;
+				this->previousNode = this->currentNode->PreviousNode();
+				delete this->currentNode;
+				this->currentNode = this->previousNode;
 			}
 		}
 
 		void Push(const T& data)
 		{
 			this->nodes++;
-			this->previousNode = this->topNode;
-			LinkedNode<T>* newNode = new LinkedNode<T>(data, nullptr, this->topNode);
-			this->topNode = newNode;
+			this->previousNode = this->currentNode;
+			LinkedNode<T>* newNode = new LinkedNode<T>(data, nullptr, this->currentNode);
+			this->currentNode = newNode;
 		}
 
 		T Pop()
 		{
 			this->nodes--;
-			T data = this->topNode->Data();
-			this->previousNode = this->topNode->PreviousNode();
-			delete this->topNode;
-			this->topNode = this->previousNode;
+			T data = this->currentNode->Data();
+			this->previousNode = this->currentNode->PreviousNode();
+			delete this->currentNode;
+			this->currentNode = this->previousNode;
 			return data;
 		}
 
 		T Top() const
 		{
-			return this->topNode->Data();
+			return this->currentNode->Data();
 		}
 
 		unsigned int Nodes() const
