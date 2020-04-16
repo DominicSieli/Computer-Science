@@ -1,28 +1,30 @@
 #include <iostream>
 
-#include "DataStructures/Stacks/LinkedArrayStack.h"
+#include "MathFunctions/Math.h"
 
 int main()
 {
-	unsigned int nodes = 0;
-	DataStructures::LinkedArrayStack<int> stack(0, 0);
+	char continueCalc = 'y';
+	unsigned int iStart = 0;
+	unsigned int iStop = 0;
+	unsigned int exponent = 0;
 
-	for(int i = 0; i < 20; i++)
+	while(continueCalc == 'y')
 	{
-		stack.Push(i);
-	}
+		system("cls");
 
-	nodes =  stack.Nodes();
+		std::cout << "Start: ";
+		std::cin >> iStart;
+		std::cout << "Stop: ";
+		std::cin >> iStop;
+		std::cout << "Exponent: ";
+		std::cin >> exponent;
 
-	while(stack.Nodes() > 0)
-	{
-		std::cout << stack.Pop() << std::endl;
-	}
+		system("cls");
 
-	if(stack.Nodes() == 0)
-	{
-		std::cout << std::endl;
-		std::cout << "Stacks Used: " << nodes << std::endl;
-		std::cout << "Stack Empty: " << stack.Nodes() << std::endl;
+		std::cout << Math::Summation(iStart, iStop, exponent) << std::endl;
+
+		std::cout << "Continue? Y" << std::endl;
+		std::cin >> continueCalc;
 	}
 }
