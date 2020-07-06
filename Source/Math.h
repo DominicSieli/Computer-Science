@@ -52,4 +52,4 @@ namespace Math
 
 		return sum;
 	}
-} // namespace Math
+}

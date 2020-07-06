@@ -2,6 +2,14 @@
 
 #include "Math.h"
 
+#define Linux
+
+#ifdef Linux
+#define CLEAR "clear"
+#else
+#define Clear "cls"
+#endif
+
 int main()
 {
 	char continueCalc = 'y';
@@ -11,7 +19,7 @@ int main()
 
 	while (continueCalc == 'y')
 	{
-		system("clear");
+		system(CLEAR);
 
 		std::cout << "Start: ";
 		std::cin >> iStart;
@@ -20,7 +28,7 @@ int main()
 		std::cout << "Exponent: ";
 		std::cin >> exponent;
 
-		system("clear");
+		system(CLEAR);
 
 		std::cout << Math::Summation(iStart, iStop, exponent) << '\n';
 
