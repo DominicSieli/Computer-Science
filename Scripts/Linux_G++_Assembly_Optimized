@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+cd ..
+
+mkdir -p Assembly
+
+file=${PWD##*/}_$(basename $0).asm
+
+g++ -S -O3 -std=c++17 Source/*.cpp -o Assembly/$file
