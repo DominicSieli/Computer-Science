@@ -2,7 +2,8 @@ cd ..
 
 mkdir Binaries
 
-set file=Windows_G++_Binary_Debug
+for %%I in (.) do set project=%%~nxI
+set file=%project%_%~n0
 
 g++ -g -Wall -std=c++17 Source/*.cpp -o Binaries/%file%
 

@@ -2,6 +2,7 @@ cd ..
 
 mkdir Assembly
 
-set file=Windows_G++_Assembly_Optimized
+for %%I in (.) do set project=%%~nxI
+set file=%project%_%~n0
 
 g++ -S -O3 -std=c++17 Source/*.cpp -o Assembly/%file%
