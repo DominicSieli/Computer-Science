@@ -6,7 +6,7 @@ mkdir -p Binaries
 
 echo "#pragma once" > Source/Configuration.h
 echo "#define LINUX" >> Source/Configuration.h
-#echo "#define DEBUG_MODE" >> Source/Configuration.h
+#echo "#define DEBUG" >> Source/Configuration.h
 
 file=${PWD##*/}_$(basename $0)
 
