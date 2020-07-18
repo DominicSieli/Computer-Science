@@ -2,7 +2,6 @@ cd ..
 
 mkdir Assembly
 
-@echo off
 echo #pragma once > Source\Configuration.h
 echo #define WINDOWS >> Source\Configuration.h
 

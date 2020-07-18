@@ -2,7 +2,6 @@ cd ..
 
 mkdir Binaries
 
-@echo off
 echo #pragma once > Source\Configuration.h
 echo #define WINDOWS >> Source\Configuration.h
 echo #define DEBUG >> Source\Configuration.h
