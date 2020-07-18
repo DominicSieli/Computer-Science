@@ -4,6 +4,10 @@ cd ..
 
 mkdir -p Assembly
 
+echo "#pragma once" > Source/Configuration.h
+echo "#define LINUX" >> Source/Configuration.h
+echo "#define DEBUG_MODE" >> Source/Configuration.h
+
 file=${PWD##*/}_$(basename $0).asm
 
 g++ -S -g -Wall -std=c++17 Source/*.cpp -o Assembly/$file
