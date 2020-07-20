@@ -13,14 +13,14 @@ namespace DataStructures
 		unsigned int count = 0;
 
 	public:
-		DynamicArrayStack(const unsigned int &size) : stack{new T[size + 1]},
-													  size{size + 1}
+		DynamicArrayStack(const unsigned int &size) : stack(new T[size + 1]), size(size + 1)
 		{
 		}
 
 		~DynamicArrayStack()
 		{
 			delete[] this->stack;
+			this->stack = nullptr;
 		}
 
 		bool IsEmpty() const
@@ -28,7 +28,7 @@ namespace DataStructures
 			return this->count == 0;
 		}
 
-		void Push(const T &item)
+		void Push(const T &data)
 		{
 			this->count++;
 
@@ -42,7 +42,7 @@ namespace DataStructures
 				this->stack = newStack;
 			}
 
-			this->stack[this->count] = item;
+			this->stack[this->count] = data;
 		}
 
 		T Pop()
@@ -55,4 +55,4 @@ namespace DataStructures
 			return this->stack[this->count];
 		}
 	};
-} // namespace DataStructures
+}

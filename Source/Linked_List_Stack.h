@@ -1,42 +1,38 @@
 #pragma once
 
-#include "LinkedArrayNode.h"
+#include "LinkedListNode.h"
 
 namespace DataStructures
 {
-	template <typename T>
-	class LinkedArrayStack
+	template<typename T>
+	class LinkedListStack
 	{
 	private:
 		int index = 0;
 		unsigned int nodes = 0;
 		unsigned int initialSize = 0;
 		unsigned int expansionSize = 0;
-		LinkedArrayNode<T> *currentNode = nullptr;
-		LinkedArrayNode<T> *previousNode = nullptr;
+		LinkedListNode<T>* currentNode = nullptr;
+		LinkedListNode<T>* previousNode = nullptr;
 
 	public:
-		LinkedArrayStack(const unsigned int &initialSize, const unsigned int &expansionSize) : index{0},
-																							   nodes{0},
-																							   initialSize{initialSize},
-																							   expansionSize{expansionSize},
-																							   currentNode{nullptr},
-																							   previousNode{nullptr}
+		LinkedListStack(const unsigned int& initialSize, const unsigned int& expansionSize) :
+			index(0), nodes(0), initialSize(initialSize), expansionSize(expansionSize), currentNode(nullptr), previousNode(nullptr)
 		{
-			if (initialSize < 1)
+			if(initialSize < 1)
 			{
 				this->initialSize = 1;
 			}
 
-			if (expansionSize < 1)
+			if(expansionSize < 1)
 			{
 				this->expansionSize = 1;
 			}
 		}
 
-		~LinkedArrayStack()
+		~LinkedListStack()
 		{
-			while (this->nodes > 0)
+			while(this->nodes > 0)
 			{
 				this->nodes--;
 				this->previousNode = this->currentNode->PreviousNode();
@@ -45,27 +41,27 @@ namespace DataStructures
 			}
 		}
 
-		void Push(const T &data)
+		void Push(const T& data)
 		{
 			this->index++;
 
-			if (this->nodes == 0)
+			if(this->nodes == 0)
 			{
 				this->nodes++;
 				this->index = 0;
 				this->previousNode = this->currentNode;
-				LinkedArrayNode<T> *newNode = new LinkedArrayNode<T>(initialSize, nullptr, this->currentNode);
+				LinkedListNode<T>* newNode = new LinkedListNode<T>(initialSize, nullptr, this->currentNode);
 				this->currentNode = newNode;
 			}
 
-			if (this->nodes > 0)
+			if(this->nodes > 0)
 			{
-				if (this->index > this->currentNode->Size() - 1)
+				if(this->index > this->currentNode->Size() - 1)
 				{
 					this->nodes++;
 					this->index = 0;
 					this->previousNode = this->currentNode;
-					LinkedArrayNode<T> *newNode = new LinkedArrayNode<T>(expansionSize, nullptr, this->currentNode);
+					LinkedListNode<T>* newNode = new LinkedListNode<T>(expansionSize, nullptr, this->currentNode);
 					this->currentNode = newNode;
 				}
 			}
@@ -77,19 +73,19 @@ namespace DataStructures
 		{
 			T data;
 
-			if (this->nodes > 0)
+			if(this->nodes > 0)
 			{
 				data = this->currentNode->GetData(this->index);
 				this->index--;
 
-				if (this->index < 0)
+				if(this->index < 0)
 				{
 					this->nodes--;
 					this->previousNode = this->currentNode->PreviousNode();
 					delete this->currentNode;
 					this->currentNode = this->previousNode;
 
-					if (this->currentNode != nullptr)
+					if(this->currentNode != nullptr)
 					{
 						this->index = this->currentNode->Size() - 1;
 					}
@@ -109,4 +105,4 @@ namespace DataStructures
 			return this->nodes;
 		}
 	};
-} // namespace DataStructures
+}
