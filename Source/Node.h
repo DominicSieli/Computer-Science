@@ -7,26 +7,38 @@ namespace DataStructures
 	{
 	private:
 		T data;
+		Node<T> *node = nullptr;
 		Node<T> *nextNode = nullptr;
 		Node<T> *previousNode = nullptr;
 
 	public:
-		Node(const T &data, Node<T> *nextNode, Node<T> *previousNode) :
-			data{data}, nextNode{nextNode}, previousNode{previousNode}
+		Node(const T &data, const Node<T> *nextNode, const Node<T> *previousNode) :
+			data(data), node(this), nextNode(nextNode), previousNode(previousNode)
 		{
+
 		}
 
-		T Data() const
+		void SetData(const T &data) noexcept
+		{
+			this->data = data;
+		}
+
+		const T GetData() const noexcept
 		{
 			return this->data;
 		}
 
-		Node<T> *NextNode() const
+		const Node<T> *Node() const noexcept
+		{
+			return this->Node;
+		}
+
+		const Node<T> *NextNode() const noexcept
 		{
 			return this->nextNode;
 		}
 
-		Node<T> *PreviousNode() const
+		const Node<T> *PreviousNode() const noexcept
 		{
 			return this->previousNode;
 		}

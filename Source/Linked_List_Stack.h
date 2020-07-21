@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LinkedListNode.h"
+#include "Node.h"
 
 namespace DataStructures
 {
@@ -12,8 +12,8 @@ namespace DataStructures
 		unsigned int nodes = 0;
 		unsigned int initialSize = 0;
 		unsigned int expansionSize = 0;
-		LinkedListNode<T>* currentNode = nullptr;
-		LinkedListNode<T>* previousNode = nullptr;
+		Node<T>* currentNode = nullptr;
+		Node<T>* previousNode = nullptr;
 
 	public:
 		LinkedListStack(const unsigned int& initialSize, const unsigned int& expansionSize) :
@@ -50,7 +50,7 @@ namespace DataStructures
 				this->nodes++;
 				this->index = 0;
 				this->previousNode = this->currentNode;
-				LinkedListNode<T>* newNode = new LinkedListNode<T>(initialSize, nullptr, this->currentNode);
+				Node<T>* newNode = new LinkedListNode<T>(initialSize, nullptr, this->currentNode);
 				this->currentNode = newNode;
 			}
 
@@ -61,7 +61,7 @@ namespace DataStructures
 					this->nodes++;
 					this->index = 0;
 					this->previousNode = this->currentNode;
-					LinkedListNode<T>* newNode = new LinkedListNode<T>(expansionSize, nullptr, this->currentNode);
+					Node<T>* newNode = new LinkedListNode<T>(expansionSize, nullptr, this->currentNode);
 					this->currentNode = newNode;
 				}
 			}
