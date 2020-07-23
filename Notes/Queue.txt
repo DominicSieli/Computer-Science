@@ -1,0 +1,5 @@
+Queue:
+Common operations:
+Enqueue: Adds a new item to the back of the queue.
+Dequeue: Removes the first item from the front of the queue.
+IsEmpty: Checks if the queue is empty.

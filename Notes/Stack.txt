@@ -1,0 +1,18 @@
+The time complexity of all stack oporations is constant O(1).
+
+The preferable implementation of a stack is a dynamically allocated linked list.
+
+A stack is represented by an array with at least one index.
+
+The first index is null while the second index contains the first element.
+
+A stack has a LIFO (last in first out) access pattern.
+
+Only the last element of a stack can be popped.
+
+New elements are only pushed to the top of the stack.
+
+Common operations
+Push: Adds a new element to the top of the stack.
+Pop: Removes the top element from the stack, and returns the value of the element.
+IsEmpty: Checks if the stack is empty.

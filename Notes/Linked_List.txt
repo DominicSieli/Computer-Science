@@ -1,0 +1,6 @@
+Linked List: A linked list is a list of nodes that are dynamically allocated on the heap.
+Each node is a stucture that contains an item value and a pointer to the next node.
+Linked lists have zero memory overhead because nodes can be added or deleted as needed
+without having to reallocate the whole list, unlike dynamically allocated arrays.
+Linked lists are not stored in contiguous memory, resulting in cache misses and therefor
+accessing elements in a linked list is slow compared to fixed or dynamic arrays.

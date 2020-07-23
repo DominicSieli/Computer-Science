@@ -1,0 +1,12 @@
+Data Structure: A data format in computer memory that implements operations on that memory.
+
+Dynamic Data Structures: Allow updates and queries.
+
+Static Data Structures: Allow queries but no updates.
+
+Adaptive Data Structures: Changes the representation of the object to query more efficiently.
+
+Common Operations: Creation/Deletion, Update, Query.
+
+Note: Dynamic data structures are preferable because they are more
+general, but static structures are useful as building blocks for dynamic structures.
