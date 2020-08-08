@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstring>
-
 template <typename T, unsigned long long S>
 class Array
 {
