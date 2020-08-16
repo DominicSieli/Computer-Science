@@ -4,7 +4,7 @@
 
 int main()
 {
-	Array<int, 10> array;
+	DataStructures::Array<int, 10> array;
 
 	for(unsigned long long i = 0; i < array.Size(); i++)
 	{

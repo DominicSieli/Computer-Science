@@ -1,17 +1,37 @@
 #pragma once
 
-template <typename T, unsigned long long S>
-class Array
+namespace DataStructures
 {
-private:
-	T data[S];
+	template <typename T, unsigned long long S>
+	class Array
+	{
+	private:
+		T array[S];
 
-public:
-	constexpr unsigned long long Size() const { return S; }
+	public:
+		constexpr unsigned long long Size() const noexcept
+		{
+			return S;
+		}
 
-	T& operator[](unsigned long long index) { return data[index]; }
-	const T& operator[](unsigned long long index) const { return data[index]; }
+		T& operator[](unsigned long long index)
+		{
+			return array[index];
+		}
 
-	T* Data() { return data; }
-	const T* Data() const { return data; }
-};
+		const T& operator[](unsigned long long index) const
+		{
+			return array[index];
+		}
+
+		T* Data() noexcept
+		{
+			return array;
+		}
+
+		const T* Data() const noexcept
+		{
+			return array;
+		}
+	};
+}
