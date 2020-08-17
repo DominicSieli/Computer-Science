@@ -3,7 +3,7 @@
 namespace DataStructures
 {
 	template <typename T, unsigned long long S>
-	class Array
+	class StaticArray
 	{
 	private:
 		T array[S];
@@ -19,19 +19,9 @@ namespace DataStructures
 			return array[index];
 		}
 
-		const T& operator[](unsigned long long index) const
+		constexpr T& operator[](unsigned long long index) const
 		{
 			return array[index];
-		}
-
-		T* Data() noexcept
-		{
-			return array;
-		}
-
-		const T* Data() const noexcept
-		{
-			return array;
 		}
 	};
 }

@@ -1,19 +1,19 @@
 #include <iostream>
 
-#include "Array.h"
+#include "Static_Array.h"
+
+DataStructures::StaticArray<int, 10> staticArray;
 
 int main()
 {
-	DataStructures::Array<int, 10> array;
-
-	for(unsigned long long i = 0; i < array.Size(); i++)
+	for(unsigned long long i = 0; i < staticArray.Size(); i++)
 	{
-		array[i] = i;
+		staticArray[i] = i;
 	}
 
-	for(unsigned long long i = 0; i < array.Size(); i++)
+	for(unsigned long long i = 0; i < staticArray.Size(); i++)
 	{
-		std::cout << array[i] << '\n';
+		std::cout << staticArray[i] << '\n';
 	}
 
 	std::cin.get();
