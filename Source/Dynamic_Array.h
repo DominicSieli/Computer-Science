@@ -6,12 +6,12 @@ namespace DataStructures
 	class DynamicArray
 	{
 	private:
-		T *array = nullptr;
-		unsigned int size = 0;
-		unsigned int count = 0;
+		T* array = nullptr;
+		unsigned long long size = 0;
+		unsigned long long count = 0;
 
 	public:
-		DynamicArray(unsigned int size)
+		DynamicArray(unsigned long long size = 0)
 			: array(new T[size]), size(size), count(0)
 		{
 
@@ -20,30 +20,68 @@ namespace DataStructures
 		~DynamicArray()
 		{
 			delete[] array;
+			array = nullptr;
 		}
 
-		T& operator[](unsigned int index)
+		constexpr unsigned long long Size() const noexcept
 		{
-			return array[index];
+			return size;
 		}
 
-		unsigned int Count() const
+		constexpr unsigned long long Count() const noexcept
 		{
 			return count;
 		}
 
-		void Add(T value)
+		T& operator[](unsigned long long index)
 		{
-			if (count < size)
-			{
-				count++;
-				array[count - 1] = value;
-			}
+			return array[index];
 		}
 
-		void Remove(unsigned int index)
+		constexpr T& operator[](unsigned long long index) const
 		{
-			if (index < count && count > 0)
+			return array[index];
+		}
+
+		void Trim()
+		{
+			size = count;
+
+			T* newArray = new T[size];
+
+			for(unsigned long long i = 0; i < count - 1; i++)
+			{
+				newArray[i] = array[i];
+			}
+
+			delete[] array;
+			array = newArray;
+		}
+
+		void Add(T data)
+		{
+			count++;
+
+			if(count > size)
+			{
+				size++;
+				T* newArray = new T[size];
+
+				for(unsigned long long i = 0; i < count - 1; i++)
+				{
+					newArray[i] = array[i];
+				}
+
+				delete[] array;
+				array = newArray;
+			}
+
+			array[count - 1] = data;
+		}
+
+		void Remove(unsigned long long index)
+		{
+			if(count > 0)
 			{
 				count--;
 				T temp1 = array[index];
