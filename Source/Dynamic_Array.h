@@ -17,20 +17,18 @@ namespace DataStructures
 
 		}
 
+		DynamicArray(DynamicArray&& copyArray)
+			: array(copyArray.array), size(copyArray.size), count(copyArray.count)
+		{
+			copyArray.array = nullptr;
+			copyArray.size = 0;
+			copyArray.count = 0;
+		}
+
 		~DynamicArray()
 		{
 			delete[] array;
 			array = nullptr;
-		}
-
-		constexpr unsigned long long Size() const noexcept
-		{
-			return size;
-		}
-
-		constexpr unsigned long long Count() const noexcept
-		{
-			return count;
 		}
 
 		T& operator[](unsigned long long index)
@@ -41,6 +39,16 @@ namespace DataStructures
 		constexpr T& operator[](unsigned long long index) const
 		{
 			return array[index];
+		}
+
+		constexpr unsigned long long Size() const noexcept
+		{
+			return size;
+		}
+
+		constexpr unsigned long long Count() const noexcept
+		{
+			return count;
 		}
 
 		void Trim()
@@ -81,7 +89,7 @@ namespace DataStructures
 
 		void Remove(unsigned long long index)
 		{
-			if(count > 0)
+			if(count > 0 && index > 0 && index < count - 1)
 			{
 				count--;
 				T temp1 = array[index];
