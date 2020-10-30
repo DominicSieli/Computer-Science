@@ -1,14 +1,3 @@
-Time Complexity Analysis
-- Access Complexity: Constant Time O(N)
-- Searching Complexity: Linear Time O(N)
-- Inserting Complexity: Linear Time O(1) / O(1)
-- Deleting Complexity: Linear Time O(1) / O(1)
-
-Functions
-- Insert(T) O(1) / O(1)
-- Delete(T) O(1) / O(1)
-- Search(T) O(N)
-
 Linked List: A linked list is a list of nodes that are dynamically allocated on the heap.
 Each node is a stucture that contains an item value and a pointer to the next node.
 Linked lists have zero memory overhead because nodes can be added or deleted as needed
