@@ -1,0 +1,11 @@
+﻿O(1) Constant Time
+O(N) Linear Time
+O(Log N) Log N Time
+O(N Log N) N Log N Time
+O(N!) N Factorial Time
+
+Ω (Upper case Omega) denotes lower bounds.
+
+Θ (Upper case Theta) denotes simultaneous upper and lower bounds.
+
+Amortized Complexity: Diminishing cost over time.
