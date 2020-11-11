@@ -1,11 +1,5 @@
-Time Complexity Analysis
-- Access Complexity: Constant Time O(1)
-- Searching Complexity: Linear Time O(N)
-- Inserting Complexity: Linear Time O(N)
-- Deleting Complexity: Linear Time O(N)
-
 Functions
-- Array[I] O(1)
-- Search(T) O(N)
-- Insert(T,I) O(N)
-- Delete(I) O(N)
+- Array[i]     O(1)
+- Search(T)    O(n)
+- Insert(T,i)  O(n)
+- Delete(i)    O(n)

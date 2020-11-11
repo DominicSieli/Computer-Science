@@ -1,14 +1,8 @@
-Time Complexity Analysis
-- Access Complexity: Constant Time O(N)
-- Searching Complexity: Linear Time O(N)
-- Inserting Complexity: Linear Time O(1)
-- Deleting Complexity: Linear Time O(1)
-
 Functions
-- Push(T) O(1)
-- T Pop() O(1)
-- T Peek() O(1)
-- bool isEmpty(T) O(1)
+- Push(T)       O(1)
+- T Pop()       O(1)
+- T Peek()      O(1)
+- bool Empty()  O(1)
 
 The time complexity of all stack oporations is constant O(1).
 

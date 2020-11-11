@@ -1,0 +1,5 @@
+Functions
+- Array[i]     O(1)
+- Search(T)    O(n)
+- Insert(T,i)  O(n)
+- Delete(i)    O(n)
