@@ -1,17 +1,10 @@
 Functions
-- Enqueue(T)    O(1)
-- T Dequeue()   O(1)
-- T Peek()      O(1)
-- bool Empty()  O(1)
+- Enqueue(T)       O(1)
+- T Dequeue()      O(1)
+- T Peek()         O(1)
+- bool Empty()     O(1)
+- bool Contains()  O(n)
 
-Queue:
-Common operations:
-Enqueue: Adds a new item to the back of the queue.
-Dequeue: Removes the first item from the front of the queue.
-IsEmpty: Checks if the queue is empty.
-
-Queues are FIFO (first in first out).
-
+Queues are FIFO (first in first out) access pattern.
 Queues are useful for cyclic tasks.
-
 Queues are central to Breadth-First search algorithms.

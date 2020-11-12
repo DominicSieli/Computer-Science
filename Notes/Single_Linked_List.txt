@@ -1,10 +1,12 @@
 Functions
-- Search(T)  O(n)
-- Insert(T)  O(1)
-- Delete(T)  O(1)
+- Get(T)       O(n)
+- Set(T)       O(n)
+- Contains(T)  O(n)
+- Insert(T)    O(n) - O(1)
+- Delete(T)    O(n) - O(1)
 
 Linked List: A linked list is a list of nodes that are dynamically allocated on the heap.
-Each node is a stucture that contains an item value and a pointer to the next node.
+Each node is a data stucture that contains an item value and a pointer to the next node.
 Linked lists have zero memory overhead because nodes can be added or deleted as needed
 without having to reallocate the whole list, unlike dynamically allocated arrays.
 Linked lists are not stored in contiguous memory, resulting in cache misses and therefor
