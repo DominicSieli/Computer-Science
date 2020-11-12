@@ -1,14 +1,13 @@
 ﻿O(1) = Constant Time
-O(Log(n)) = Logarithmic Time
+O(log(n)) = Logarithmic Time
 O(n) = Linear Time
-O(nLog(n)) = Linearithmic Time
+O(nlog(n)) = Linearithmic Time
 O(n^2) = Quadratic Time
 O(n^3) = Cubic Time
 O(n^x) = Exponential Time
 O(n!) = Factorial Time
 
-Ω Omega denotes lower bounds.
-
-Θ Theta denotes simultaneous upper and lower bounds.
-
+O() O denotes upper bounds (worst case).
+Ω() Omega denotes lower bounds (best case).
+Θ() Theta denotes simultaneous upper and lower bounds.
 Amortized Complexity: Diminishing cost over time.

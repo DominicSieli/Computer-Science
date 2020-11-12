@@ -1,0 +1,9 @@
+Abstract Data-Types
+- Sets
+- Lists
+- Stacks
+- Queues
+- Tuples
+- Matrices
+- Collections
+- Dictionaries / Maps

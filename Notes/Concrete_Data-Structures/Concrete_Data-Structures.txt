@@ -1,12 +1,16 @@
+Concrete Data-Structures
+- Heaps
+- Trees
+- Graphs
+- Hash Maps / Hash Tables
+- Linked Lists
+- Static Arrays
+- Dynamic Arrays / Vectors
+
 Data Structure: A construct of data organization that groups data elements together and implements operations on that data.
-
 Dynamic Data Structures: Allows updates and queries.
-
 Static Data Structures: Allows queries but no updates.
-
 Adaptive Data Structures: Changes structure to allow for more efficient update and query operations.
-
 Common Operations: Add Data, Delete Data, Update Data, Query Data.
-
 Note: Dynamic data structures are preferable because they are more
 general, but static structures are useful as building blocks for dynamic structures.
