@@ -1,5 +1,6 @@
 Functions
-- Vector[i]  O(1)
-- Add(T)     O(1)
-- Delete(i)  O(1)
+- Array[i]   O(1)
 - Search(T)  O(n)
+- Append(T)  O(1)
+- Insert(T)  O(n)
+- Delete(i)  O(n)
