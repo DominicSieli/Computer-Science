@@ -1,4 +1,5 @@
 Functions
+- Size()           O(1)
 - Push(T)          O(1)
 - T Pop()          O(1)
 - T Peek()         O(1)
