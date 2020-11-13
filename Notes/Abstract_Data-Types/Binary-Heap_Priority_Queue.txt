@@ -1,0 +1,14 @@
+Functions
+- Construct()  O(n)
+- T Dequeue()  O(log(n))
+- T Peek()     O(1)
+- Add(T)       O(log(n))
+
+- LinearRemove(T)    O(n)
+- HashRemove(T)      O(log(n))
+- HashContains(T)    O(1)
+- LinearContains(T)  O(n)
+
+Queues are FIFO (first in first out) access pattern.
+Queues are useful for cyclic tasks.
+Queues are central to Breadth-First search algorithms.

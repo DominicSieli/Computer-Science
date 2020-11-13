@@ -3,6 +3,7 @@ Functions
 - T Dequeue()      O(1)
 - T Peek()         O(1)
 - bool Empty()     O(1)
+- Remove(T)        O(n)
 - bool Contains()  O(n)
 
 Queues are FIFO (first in first out) access pattern.
