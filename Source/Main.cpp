@@ -1,19 +1,18 @@
 #include <iostream>
 
-#include "Dynamic_Array.h"
+#include "Node.h"
 
-DataStructures::DynamicArray<int> array;
+const unsigned int P = 8;
+
+DataStructures::Node<int, P>* parent = new DataStructures::Node<int, P>();
 
 int main()
 {
-	for(unsigned long long i = 0; i < 10; i++)
-	{
-		array.Add((int)i);
-	}
+	std::cout << parent->data << '\n' << '\n';
 
-	for(unsigned long long i = 0; i < 10; i++)
+	for(unsigned int i = 0; i < P; i++)
 	{
-		std::cout << array[i] << '\n';
+		std::cout << parent->pointers[i] << '\n';
 	}
 
 	std::cin.get();

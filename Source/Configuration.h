@@ -1,3 +1,3 @@
-#pragma once
-#define LINUX
-#define DEBUG
+#pragma once 
+#define WINDOWS 
+#define DEBUG 
