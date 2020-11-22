@@ -2,10 +2,10 @@
 
 namespace DataStructures
 {
-	template<typename T, unsigned int P>
+	template<typename T, unsigned int Size>
 	struct Node
 	{
 		T data = {};
-		Node* pointers[P] = {};
+		Node* link[Size] = {};
 	};
 }

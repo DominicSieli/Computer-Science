@@ -1,4 +1,4 @@
-﻿-Time Complexity (ranked best to worst)
+-Time Complexity
 1. O(1) Constant: Maximum Operations = 1
 2. O(log(n)) Logarithmic: Maximum Operations = log(n)
 3. O(n) Linear: Maximum Operations = n
