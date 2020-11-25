@@ -2,24 +2,24 @@
 
 namespace DataStructures
 {
-	template <typename T, unsigned long long S>
-	class StaticArray
+	template<typename Data_Type, unsigned long long Array_Size>
+	class Static_Array
 	{
 	private:
-		T array[S];
+		Data_Type array[Array_Size] {};
 
 	public:
 		constexpr unsigned long long Size() const noexcept
 		{
-			return S;
+			return Array_Size;
 		}
 
-		T& operator[](unsigned long long index)
+		Data_Type& operator[](unsigned long long index)
 		{
 			return array[index];
 		}
 
-		constexpr T& operator[](unsigned long long index) const
+		constexpr Data_Type& operator[](unsigned long long index) const
 		{
 			return array[index];
 		}

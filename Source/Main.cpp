@@ -1,15 +1,20 @@
 #include <iostream>
 
-#include "Node.h"
+#include "Static_Array.h"
 
-const unsigned short Size = 2;
-
-DataStructures::Node<short, Size>* node = new DataStructures::Node<short, Size>();
+DataStructures::Static_Array<short, 20> array;
 
 int main()
 {
-	std::cout << "Data Size: " << sizeof(node->data) << '\n';
-	std::cout << "Links Size: " << sizeof(node->link) << '\n';
-	std::cout << "Node Size: " << sizeof(node->data) + sizeof(node->link) << '\n';
+	for(unsigned long long i = 0; i < array.Size(); i++)
+	{
+		array[i] = i;
+	}
+
+	for(unsigned long long i = 0; i < array.Size(); i++)
+	{
+		std::cout << array[i] << '\n';
+	}
+
 	std::cin.get();
 }
