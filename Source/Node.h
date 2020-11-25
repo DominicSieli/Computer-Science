@@ -1,11 +1,18 @@
 #pragma once
 
+#include "Array.h"
+
 namespace DataStructures
 {
-	template<typename Data_Type, unsigned long long Size>
+	template<typename Data_Type, const unsigned long long Size>
 	struct Node
 	{
 		Data_Type data {};
-		Node* link[Size] {};
+		DataStructures::Array<Node*, Size> links {};
+
+		Node(const Data_Type& data = {}) : data{data}
+		{
+
+		}
 	};
 }
