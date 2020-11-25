@@ -2,18 +2,14 @@
 
 #include "Node.h"
 
-const unsigned int Size = 8;
+const unsigned short Size = 2;
 
-DataStructures::Node<int, Size>* parent = new DataStructures::Node<int, Size>();
+DataStructures::Node<short, Size>* node = new DataStructures::Node<short, Size>();
 
 int main()
 {
-	std::cout << parent->data << '\n' << '\n';
-
-	for(unsigned int i = 0; i < Size; i++)
-	{
-		std::cout << parent->link[i] << '\n';
-	}
-
+	std::cout << "Data Size: " << sizeof(node->data) << '\n';
+	std::cout << "Links Size: " << sizeof(node->link) << '\n';
+	std::cout << "Node Size: " << sizeof(node->data) + sizeof(node->link) << '\n';
 	std::cin.get();
 }

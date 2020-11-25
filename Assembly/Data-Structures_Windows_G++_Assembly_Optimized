@@ -1,0 +1,102 @@
+	.file	"Main.cpp"
+	.text
+	.p2align 4,,15
+	.def	__tcf_0;	.scl	3;	.type	32;	.endef
+	.seh_proc	__tcf_0
+__tcf_0:
+.LFB2396:
+	.seh_endprologue
+	leaq	_ZStL8__ioinit(%rip), %rcx
+	jmp	_ZNSt8ios_base4InitD1Ev
+	.seh_endproc
+	.def	__main;	.scl	2;	.type	32;	.endef
+	.section	.text.startup,"x"
+	.p2align 4,,15
+	.globl	main
+	.def	main;	.scl	2;	.type	32;	.endef
+	.seh_proc	main
+main:
+.LFB1904:
+	pushq	%rbx
+	.seh_pushreg	%rbx
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	call	__main
+	movq	node(%rip), %rax
+	leaq	47(%rsp), %rbx
+	movq	.refptr._ZSt4cout(%rip), %rcx
+	movl	(%rax), %edx
+	call	_ZNSolsEi
+	movq	%rbx, %rdx
+	movl	$1, %r8d
+	movb	$10, 47(%rsp)
+	movq	%rax, %rcx
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_x
+	movl	$1, %r8d
+	movq	%rbx, %rdx
+	movb	$10, 47(%rsp)
+	movq	%rax, %rcx
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_x
+	movq	.refptr._ZSt4cout(%rip), %rcx
+	movl	$4, %edx
+	call	_ZNSo9_M_insertIyEERSoT_
+	movl	$1, %r8d
+	movq	%rbx, %rdx
+	movb	$10, 47(%rsp)
+	movq	%rax, %rcx
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_x
+	movq	.refptr._ZSt3cin(%rip), %rcx
+	call	_ZNSi3getEv
+	xorl	%eax, %eax
+	addq	$48, %rsp
+	popq	%rbx
+	ret
+	.seh_endproc
+	.p2align 4,,15
+	.def	_GLOBAL__sub_I_node;	.scl	3;	.type	32;	.endef
+	.seh_proc	_GLOBAL__sub_I_node
+_GLOBAL__sub_I_node:
+.LFB2397:
+	subq	$40, %rsp
+	.seh_stackalloc	40
+	.seh_endprologue
+	leaq	_ZStL8__ioinit(%rip), %rcx
+	call	_ZNSt8ios_base4InitC1Ev
+	leaq	__tcf_0(%rip), %rcx
+	call	atexit
+	movl	$8, %ecx
+	call	_Znwy
+	movl	$0, (%rax)
+	movq	%rax, node(%rip)
+	addq	$40, %rsp
+	ret
+	.seh_endproc
+	.section	.ctors,"w"
+	.align 8
+	.quad	_GLOBAL__sub_I_node
+	.globl	node
+	.bss
+	.align 8
+node:
+	.space 8
+.lcomm _ZStL8__ioinit,1,1
+	.ident	"GCC: (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 8.1.0"
+	.def	_ZNSt8ios_base4InitD1Ev;	.scl	2;	.type	32;	.endef
+	.def	_ZNSolsEi;	.scl	2;	.type	32;	.endef
+	.def	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_x;	.scl	2;	.type	32;	.endef
+	.def	_ZNSo9_M_insertIyEERSoT_;	.scl	2;	.type	32;	.endef
+	.def	_ZNSi3getEv;	.scl	2;	.type	32;	.endef
+	.def	_ZNSt8ios_base4InitC1Ev;	.scl	2;	.type	32;	.endef
+	.def	atexit;	.scl	2;	.type	32;	.endef
+	.def	_Znwy;	.scl	2;	.type	32;	.endef
+	.section	.rdata$.refptr._ZSt3cin, "dr"
+	.globl	.refptr._ZSt3cin
+	.linkonce	discard
+.refptr._ZSt3cin:
+	.quad	_ZSt3cin
+	.section	.rdata$.refptr._ZSt4cout, "dr"
+	.globl	.refptr._ZSt4cout
+	.linkonce	discard
+.refptr._ZSt4cout:
+	.quad	_ZSt4cout
