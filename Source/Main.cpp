@@ -2,9 +2,14 @@
 
 #include "Node.h"
 
-const unsigned long long links = 2;
+const unsigned long long links = 4;
 
-DataStructures::Node<int, links>* node = new DataStructures::Node<int, links>(8);
+DataStructures::Node<int, links>* child1 = new DataStructures::Node<int, links>(10, {nullptr, nullptr});
+DataStructures::Node<int, links>* child2 = new DataStructures::Node<int, links>(10, {nullptr, nullptr});
+DataStructures::Node<int, links>* child3 = new DataStructures::Node<int, links>(10, {nullptr, nullptr});
+DataStructures::Node<int, links>* child4 = new DataStructures::Node<int, links>(10, {nullptr, nullptr});
+
+DataStructures::Node<int, links>* node = new DataStructures::Node<int, links>();
 
 int main()
 {
