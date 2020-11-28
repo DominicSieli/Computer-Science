@@ -4,12 +4,12 @@
 
 const unsigned long long links = 4;
 
-DataStructures::Node<int, links>* child1 = new DataStructures::Node<int, links>(10, {nullptr, nullptr});
-DataStructures::Node<int, links>* child2 = new DataStructures::Node<int, links>(10, {nullptr, nullptr});
-DataStructures::Node<int, links>* child3 = new DataStructures::Node<int, links>(10, {nullptr, nullptr});
-DataStructures::Node<int, links>* child4 = new DataStructures::Node<int, links>(10, {nullptr, nullptr});
+Data_Structures::Node<int, links>* child1 = new Data_Structures::Node<int, links>(10, {nullptr, nullptr});
+Data_Structures::Node<int, links>* child2 = new Data_Structures::Node<int, links>(10, {nullptr, nullptr});
+Data_Structures::Node<int, links>* child3 = new Data_Structures::Node<int, links>(10, {nullptr, nullptr});
+Data_Structures::Node<int, links>* child4 = new Data_Structures::Node<int, links>(10, {nullptr, nullptr});
 
-DataStructures::Node<int, links>* node = new DataStructures::Node<int, links>();
+Data_Structures::Node<int, links>* node = new Data_Structures::Node<int, links>();
 
 int main()
 {

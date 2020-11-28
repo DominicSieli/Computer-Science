@@ -2,10 +2,10 @@
 
 #include "Node.h"
 
-namespace DataStructures
+namespace Data_Structures
 {
 	template<typename T>
-	class LinkedListStack
+	class Linked_List_Stack
 	{
 	private:
 		int index = 0;
@@ -16,7 +16,7 @@ namespace DataStructures
 		Node<T>* previousNode = nullptr;
 
 	public:
-		LinkedListStack(const unsigned int& initialSize, const unsigned int& expansionSize) :
+		Linked_List_Stack(const unsigned int& initialSize, const unsigned int& expansionSize) :
 			index(0), nodes(0), initialSize(initialSize), expansionSize(expansionSize), currentNode(nullptr), previousNode(nullptr)
 		{
 			if(initialSize < 1)
@@ -30,7 +30,7 @@ namespace DataStructures
 			}
 		}
 
-		~LinkedListStack()
+		~Linked_List_Stack()
 		{
 			while(this->nodes > 0)
 			{

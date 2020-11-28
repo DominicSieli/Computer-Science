@@ -2,10 +2,10 @@
 
 #include <memory>
 
-namespace DataStructures
+namespace Data_Structures
 {
 	template <typename T>
-	struct DynamicArrayStack
+	struct Dynamic_Array_Stack
 	{
 	private:
 		T *stack = nullptr;
@@ -13,13 +13,13 @@ namespace DataStructures
 		unsigned int count = 0;
 
 	public:
-		DynamicArrayStack(const unsigned int &size)
+		Dynamic_Array_Stack(const unsigned int &size)
 			: stack(new T[size + 1]), size(size + 1)
 		{
 
 		}
 
-		~DynamicArrayStack()
+		~Dynamic_Array_Stack()
 		{
 			delete[] stack;
 			stack = nullptr;

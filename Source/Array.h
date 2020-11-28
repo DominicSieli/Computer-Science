@@ -2,7 +2,7 @@
 
 #include<initializer_list>
 
-namespace DataStructures
+namespace Data_Structures
 {
 	template<typename Data_Type, unsigned long long Array_Size>
 	class Array
@@ -19,6 +19,14 @@ namespace DataStructures
 			{
 				array[index] = x;
 				index++;
+			}
+		}
+
+		~Array()
+		{
+			for(unsigned long long i = 0; i < Array_Size; i++)
+			{
+				delete array[i];
 			}
 		}
 

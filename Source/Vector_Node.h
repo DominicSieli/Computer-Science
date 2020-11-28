@@ -1,24 +1,24 @@
 #pragma once
 
-namespace DataStructures
+namespace Data_Structures
 {
 	template <typename T>
-	struct VectorNode
+	struct Vector_Node
 	{
 	private:
 		T *node = nullptr;
 		unsigned int size = 0;
-		VectorNode *nextNode = nullptr;
-		VectorNode *previousNode = nullptr;
+		Vector_Node *nextNode = nullptr;
+		Vector_Node *previousNode = nullptr;
 
 	public:
-		VectorNode(const unsigned int &size, VectorNode<T> *nextNode, VectorNode<T> *previousNode) :
+		Vector_Node(const unsigned int &size, Vector_Node<T> *nextNode, Vector_Node<T> *previousNode) :
 			node(new T[size]), size(size), nextNode(nextNode), previousNode(previousNode)
 		{
 
 		}
 
-		~VectorNode()
+		~Vector_Node()
 		{
 			delete[] this->node;
 		}
@@ -28,12 +28,12 @@ namespace DataStructures
 			return this->size;
 		}
 
-		VectorNode<T> *NextNode() const
+		Vector_Node<T> *NextNode() const
 		{
 			return this->nextNode;
 		}
 
-		VectorNode<T> *PreviousNode() const
+		Vector_Node<T> *PreviousNode() const
 		{
 			return this->previousNode;
 		}

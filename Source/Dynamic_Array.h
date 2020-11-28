@@ -1,9 +1,9 @@
 #pragma once
 
-namespace DataStructures
+namespace Data_Structures
 {
 	template <typename T>
-	class DynamicArray
+	class Dynamic_Array
 	{
 	private:
 		T* array = nullptr;
@@ -11,13 +11,13 @@ namespace DataStructures
 		unsigned long long count = 0;
 
 	public:
-		DynamicArray(unsigned long long size = 0)
+		Dynamic_Array(unsigned long long size = 0)
 			: array(new T[size]), size(size), count(0)
 		{
 
 		}
 
-		DynamicArray(DynamicArray&& copyArray)
+		Dynamic_Array(Dynamic_Array&& copyArray)
 			: array(copyArray.array), size(copyArray.size), count(copyArray.count)
 		{
 			copyArray.array = nullptr;
@@ -25,7 +25,7 @@ namespace DataStructures
 			copyArray.count = 0;
 		}
 
-		~DynamicArray()
+		~Dynamic_Array()
 		{
 			delete[] array;
 			array = nullptr;
