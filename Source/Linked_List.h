@@ -19,7 +19,7 @@ namespace Data_Structures
 		{
 			while()
 			{
-				
+
 			}
 		}
 
@@ -45,7 +45,7 @@ namespace Data_Structures
 
 		void Delete_First(const Data_Type& data)
 		{
-			
+
 		}
 	};
 }
