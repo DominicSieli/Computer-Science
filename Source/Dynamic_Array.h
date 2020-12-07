@@ -1,28 +1,34 @@
 #pragma once
 
+#include <initializer_list>
+
 namespace Data_Structures
 {
-	template <typename T>
+	template<typename Data_Type, const unsigned long long Array_Size = 0>
 	class Dynamic_Array
 	{
 	private:
-		T* array = nullptr;
+		Data_Type* array = nullptr;
 		unsigned long long size = 0;
 		unsigned long long count = 0;
 
 	public:
-		Dynamic_Array(unsigned long long size = 0)
-			: array(new T[size]), size(size), count(0)
+		Dynamic_Array(const std::initializer_list<Data_Type>& data = {})
+			: array{new Data_Type[Array_Size]}, size{Array_Size}, count{0}
 		{
-
+			for(Data_Type item : data)
+			{
+				Add(item);
+			}
 		}
 
-		Dynamic_Array(Dynamic_Array&& copyArray)
-			: array(copyArray.array), size(copyArray.size), count(copyArray.count)
+		Dynamic_Array(const Dynamic_Array& copyArray)
+			: array{new Data_Type[copyArray.size]}, size{copyArray.size}, count{copyArray.count}
 		{
-			copyArray.array = nullptr;
-			copyArray.size = 0;
-			copyArray.count = 0;
+			for(unsigned long long index = 0; index < copyArray.Size(); index++)
+			{
+				array[index] = copyArray[index];
+			}
 		}
 
 		~Dynamic_Array()
@@ -31,12 +37,12 @@ namespace Data_Structures
 			array = nullptr;
 		}
 
-		T& operator[](unsigned long long index)
+		Data_Type& operator[](const unsigned long long& index)
 		{
 			return array[index];
 		}
 
-		constexpr T& operator[](unsigned long long index) const
+		constexpr Data_Type& operator[](const unsigned long long& index) const
 		{
 			return array[index];
 		}
@@ -55,29 +61,29 @@ namespace Data_Structures
 		{
 			size = count;
 
-			T* newArray = new T[size];
+			Data_Type* newArray = new Data_Type[size];
 
-			for(unsigned long long i = 0; i < count - 1; i++)
+			for(unsigned long long index = 0; index < count; index++)
 			{
-				newArray[i] = array[i];
+				newArray[index] = array[index];
 			}
 
 			delete[] array;
 			array = newArray;
 		}
 
-		void Add(T data)
+		void Add(const Data_Type& data)
 		{
 			count++;
 
 			if(count > size)
 			{
 				size++;
-				T* newArray = new T[size];
+				Data_Type* newArray = new Data_Type[size];
 
-				for(unsigned long long i = 0; i < count - 1; i++)
+				for(unsigned long long index = 0; index < count - 1; index++)
 				{
-					newArray[i] = array[i];
+					newArray[index] = array[index];
 				}
 
 				delete[] array;
@@ -87,13 +93,13 @@ namespace Data_Structures
 			array[count - 1] = data;
 		}
 
-		void Remove(unsigned long long index)
+		void Remove(const unsigned long long& index)
 		{
-			if(count > 0 && index > 0 && index < count - 1)
+			if(count > 0 && index < count)
 			{
 				count--;
-				T temp1 = array[index];
-				T temp2 = array[count];
+				Data_Type temp1 = array[index];
+				Data_Type temp2 = array[count];
 
 				array[index] = temp2;
 				array[count] = temp1;

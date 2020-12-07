@@ -1,24 +1,90 @@
 #include <iostream>
 
-#include "Node.h"
+#include "Dynamic_Array.h"
 
-const unsigned long long links = 4;
-
-Data_Structures::Node<int, links>* child1 = new Data_Structures::Node<int, links>(10, {nullptr, nullptr});
-Data_Structures::Node<int, links>* child2 = new Data_Structures::Node<int, links>(10, {nullptr, nullptr});
-Data_Structures::Node<int, links>* child3 = new Data_Structures::Node<int, links>(10, {nullptr, nullptr});
-Data_Structures::Node<int, links>* child4 = new Data_Structures::Node<int, links>(10, {nullptr, nullptr});
-
-Data_Structures::Node<int, links>* node = new Data_Structures::Node<int, links>();
+Data_Structures::Dynamic_Array<int> array({1,2,3,4});
+Data_Structures::Dynamic_Array<int> dArray(array);
 
 int main()
 {
-	std::cout << "Node Data: " << node->data << "\n\n";
+	std::cout << "Count: " << dArray.Count() << '\n';
+	std::cout << "Size: " << dArray.Size() << '\n';
 
-	for(unsigned long long i = 0; i < node->links.Size(); i++)
+	std::cout << "Count: ";
+	for(unsigned long long i = 0; i < dArray.Count(); i++)
 	{
-		std::cout << "Link: " << i << " = " << node->links[i] << '\n';
+		std::cout << dArray[i] << " ";
 	}
+
+	std::cout << '\n';
+
+	std::cout << "Size: ";
+	for(unsigned long long i = 0; i < dArray.Size(); i++)
+	{
+		std::cout << dArray[i] << " ";
+	}
+
+	std::cout << '\n' << '\n';
+
+	dArray.Add(dArray.Count() + 1);
+	std::cout << "Count: " << dArray.Count() << '\n';
+	std::cout << "Size: " << dArray.Size() << '\n';
+
+	std::cout << "Count: ";
+	for(unsigned long long i = 0; i < dArray.Count(); i++)
+	{
+		std::cout << dArray[i] << " ";
+	}
+
+	std::cout << '\n';
+
+	std::cout << "Size: ";
+	for(unsigned long long i = 0; i < dArray.Size(); i++)
+	{
+		std::cout << dArray[i] << " ";
+	}
+
+	std::cout << '\n' << '\n';
+
+	dArray.Remove(dArray.Count() - 1);
+	std::cout << "Count: " << dArray.Count() << '\n';
+	std::cout << "Size: " << dArray.Size() << '\n';
+
+	std::cout << "Count: ";
+	for(unsigned long long i = 0; i < dArray.Count(); i++)
+	{
+		std::cout << dArray[i] << " ";
+	}
+
+	std::cout << '\n';
+
+	std::cout << "Size: ";
+	for(unsigned long long i = 0; i < dArray.Size(); i++)
+	{
+		std::cout << dArray[i] << " ";
+	}
+
+	std::cout << '\n' << '\n';
+
+	dArray.Trim();
+	std::cout << "Count: " << dArray.Count() << '\n';
+	std::cout << "Size: " << dArray.Size() << '\n';
+
+	std::cout << "Count: ";
+	for(unsigned long long i = 0; i < dArray.Count(); i++)
+	{
+		std::cout << dArray[i] << " ";
+	}
+
+	std::cout << '\n';
+
+	std::cout << "Size: ";
+	for(unsigned long long i = 0; i < dArray.Size(); i++)
+	{
+		std::cout << dArray[i] << " ";
+	}
+
+	std::cout << '\n';
 
 	std::cin.get();
 }

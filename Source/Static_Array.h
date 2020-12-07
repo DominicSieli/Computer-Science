@@ -1,33 +1,29 @@
 #pragma once
 
-#include<initializer_list>
+#include <initializer_list>
 
 namespace Data_Structures
 {
-	template<typename Data_Type, unsigned long long Array_Size>
-	class Array
+	template<typename Data_Type, const unsigned long long Array_Size>
+	class Static_Array
 	{
 	private:
 		Data_Type array[Array_Size] {};
 
 	public:
-		Array(const std::initializer_list<Data_Type>& data)
+		Static_Array(const std::initializer_list<Data_Type>& data)
 		{
 			unsigned long long index = 0;
 
-			for(auto x : data)
+			for(Data_Type item : data)
 			{
-				array[index] = x;
-				index++;
+				array[index++] = item;
 			}
 		}
 
-		~Array()
+		~Static_Array()
 		{
-			for(unsigned long long i = 0; i < Array_Size; i++)
-			{
-				delete array[i];
-			}
+			
 		}
 
 		constexpr unsigned long long Size() const noexcept
@@ -37,9 +33,9 @@ namespace Data_Structures
 
 		void Clear() noexcept
 		{
-			for(unsigned long long i = 0; i < Array_Size; i++)
+			for(unsigned long long index = 0; index < Array_Size; index++)
 			{
-				array[i] = {};
+				array[index] = {};
 			}
 		}
 
