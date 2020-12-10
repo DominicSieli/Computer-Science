@@ -4,20 +4,20 @@
 
 namespace Data_Structures
 {
-	template<typename Data_Type, const unsigned long long Array_Size = 0>
+	using Index_Type = unsigned long long;
+
+	template<typename Data_Type, const Index_Type Array_Size = 0>
 	class Dynamic_Array
 	{
 	private:
+		Index_Type size = 0;
+		Index_Type count = 0;
 		Data_Type* array = nullptr;
-		unsigned long long size = 0;
-		unsigned long long count = 0;
 
 	public:
 		Dynamic_Array(const std::initializer_list<Data_Type>& data = {})
-			: array{new Data_Type[Array_Size]}, size{Array_Size}, count{0}
+			: size{Array_Size}, count{0}, array{new Data_Type[Array_Size]}
 		{
-			unsigned long long index = 0;
-			
 			for(Data_Type item : data)
 			{
 				Add(item);
@@ -25,9 +25,9 @@ namespace Data_Structures
 		}
 
 		Dynamic_Array(const Dynamic_Array& copyArray)
-			: array{new Data_Type[copyArray.size]}, size{copyArray.size}, count{copyArray.count}
+			: size{copyArray.size}, count{copyArray.count}, array{new Data_Type[copyArray.size]}
 		{
-			for(unsigned long long index = 0; index < copyArray.Size(); index++)
+			for(Index_Type index = 0; index < copyArray.Size(); index++)
 			{
 				array[index] = copyArray[index];
 			}
@@ -38,23 +38,23 @@ namespace Data_Structures
 			delete[] array;
 			array = nullptr;
 		}
-		
-		Data_Type& operator[](const unsigned long long& index)
+
+		Data_Type& operator[](const Index_Type& index)
 		{
 			return array[index];
 		}
 
-		constexpr Data_Type& operator[](const unsigned long long& index) const
+		constexpr Data_Type& operator[](const Index_Type& index) const
 		{
 			return array[index];
 		}
 
-		constexpr unsigned long long Size() const noexcept
+		constexpr Index_Type Size() const noexcept
 		{
 			return size;
 		}
 
-		constexpr unsigned long long Count() const noexcept
+		constexpr Index_Type Count() const noexcept
 		{
 			return count;
 		}
@@ -65,7 +65,7 @@ namespace Data_Structures
 
 			Data_Type* newArray = new Data_Type[size];
 
-			for(unsigned long long index = 0; index < count; index++)
+			for(Index_Type index = 0; index < count; index++)
 			{
 				newArray[index] = array[index];
 			}
@@ -76,14 +76,12 @@ namespace Data_Structures
 
 		void Add(const Data_Type& data)
 		{
-			count++;
-
-			if(count > size)
+			if((count + 1) > size)
 			{
 				size++;
 				Data_Type* newArray = new Data_Type[size];
 
-				for(unsigned long long index = 0; index < count - 1; index++)
+				for(Index_Type index = 0; index < count; index++)
 				{
 					newArray[index] = array[index];
 				}
@@ -92,19 +90,15 @@ namespace Data_Structures
 				array = newArray;
 			}
 
-			array[count - 1] = data;
+			array[count++] = data;
 		}
 
-		void Remove(const unsigned long long& index)
+		void Remove(const Index_Type& index)
 		{
 			if(count > 0 && index < count)
 			{
 				count--;
-				Data_Type temp1 = array[index];
-				Data_Type temp2 = array[count];
-
-				array[index] = temp2;
-				array[count] = temp1;
+				std::swap(array[index], array[count]);
 			}
 		}
 	};

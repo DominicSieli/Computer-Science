@@ -12,10 +12,7 @@ namespace Data_Structures
 		Data_Type data {};
 		Data_Structures::Static_Array<Node*, Array_Size> links {};
 
-		Node(const Data_Type& data = {}, const std::initializer_list<Node*>& links = {})
-		    : data{data}, links{links}
-		{
-			
-		}
+		Node(const Data_Type& data = {}, const std::initializer_list<Node*>& links = {}) : data{data}, links{links}
+		{}
 	};
 }
