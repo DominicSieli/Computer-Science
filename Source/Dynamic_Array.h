@@ -16,6 +16,8 @@ namespace Data_Structures
 		Dynamic_Array(const std::initializer_list<Data_Type>& data = {})
 			: array{new Data_Type[Array_Size]}, size{Array_Size}, count{0}
 		{
+			unsigned long long index = 0;
+			
 			for(Data_Type item : data)
 			{
 				Add(item);
@@ -36,7 +38,7 @@ namespace Data_Structures
 			delete[] array;
 			array = nullptr;
 		}
-
+		
 		Data_Type& operator[](const unsigned long long& index)
 		{
 			return array[index];
