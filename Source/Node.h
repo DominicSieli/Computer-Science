@@ -6,13 +6,16 @@
 
 namespace Data_Structures
 {
-	template<typename Data_Type, const unsigned long long Array_Size>
+	template<typename Data_Type, unsigned long long Array_Size>
 	struct Node
 	{
 		Data_Type data {};
-		Data_Structures::Static_Array<Node*, Array_Size> links {};
+		unsigned long long priority {};
+		Static_Array<Node*, Array_Size> links {};
 
-		Node(const Data_Type& data = {}, const std::initializer_list<Node*>& links = {}) : data{data}, links{links}
-		{}
+		Node(const Data_Type& data = {}, const unsigned long long& priority = {},const std::initializer_list<Node*>& links = {}) : data{data}, priority{priority}, links{links}
+		{
+
+		}
 	};
 }

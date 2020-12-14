@@ -15,8 +15,7 @@ namespace Data_Structures
 		Data_Type* array = nullptr;
 
 	public:
-		Dynamic_Array(const std::initializer_list<Data_Type>& data = {})
-			: size{Array_Size}, count{0}, array{new Data_Type[Array_Size]}
+		Dynamic_Array(const std::initializer_list<Data_Type>& data = {}) : size{Array_Size}, count{0}, array{new Data_Type[Array_Size]}
 		{
 			for(Data_Type item : data)
 			{
@@ -24,12 +23,11 @@ namespace Data_Structures
 			}
 		}
 
-		Dynamic_Array(const Dynamic_Array& copyArray)
-			: size{copyArray.size}, count{copyArray.count}, array{new Data_Type[copyArray.size]}
+		Dynamic_Array(const Dynamic_Array& copy_array) : size{copy_array.size}, count{copy_array.count}, array{new Data_Type[copy_array.size]}
 		{
-			for(Index_Type index = 0; index < copyArray.Size(); index++)
+			for(Index_Type index = 0; index < copy_array.Size(); index++)
 			{
-				array[index] = copyArray[index];
+				array[index] = copy_array[index];
 			}
 		}
 
