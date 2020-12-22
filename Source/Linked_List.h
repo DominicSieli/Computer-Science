@@ -1,51 +1,140 @@
 #pragma once
 
-#include "Node.h"
+#include "Single_Linked_Node.h"
 
 namespace Data_Structures
 {
-	template<typename Data_Type, const unsigned long long Links>
-	class Linked_List
+	template<typename T>
+	class Single_Linked_List
 	{
 	private:
-		Data_Structures::Node<Data_Type, Links>* head = nullptr;
-		Data_Structures::Node<Data_Type, Links>* tail = nullptr;
-		Data_Structures::Node<Data_Type, Links>* pointer = nullptr;
+		unsigned long long count {};
 
 	public:
-		Linked_List() {}
+		Single_Linked_Node<T>* head {};
+		Single_Linked_Node<T>* tail {};
 
-		~Linked_List()
+	public:
+		Single_Linked_List()
+		{}
+
+		~Single_Linked_List()
+		{}
+
+		void Clear()
 		{
-			while()
+
+		}
+
+		void Search(const T& data)
+		{
+
+		}
+
+		void Delete_Head()
+		{
+
+		}
+
+		void Delete_Tail()
+		{
+
+		}
+
+		unsigned long long Count()
+		{
+
+		}
+
+		void Delete(const unsigned long long& index)
+		{
+
+		}
+
+		void Insert_Head(const T& data)
+		{
+			Single_Linked_Node<T>* node = new Single_Linked_Node<T>(data);
+
+			node->next = head;
+
+			head = node;
+
+			if(count == 0)
 			{
-
+				tail = head;
 			}
+
+			count++;
 		}
 
-		void Add_Head(const Data_Type& data)
+		void Insert_Tail(const T& data)
 		{
+			if(count == 0)
+			{
+				Insert_Head(data);
+				return;
+			}
 
+			Single_Linked_Node<T>* node = new Single_Linked_Node<T>(data);
+
+			tail->next = node;
+
+			tail = node;
+
+			count++;
 		}
 
-		void Add_Tail(const Data_Type& data)
+		void Insert(const unsigned long long& index, const T& data)
 		{
+			if(index < 0 || index > count)
+			{
+				return;
+			}
 
+			if(index == 0)
+			{
+				Insert_Head(data);
+				return;
+			}
+			else if(index == count)
+			{
+				Insert_Tail(data);
+				return;
+			}
+
+			Single_Linked_Node<T>* previous_node = head;
+
+			for(unsigned long long i = 0; i < index - 1; ++i)
+			{
+				previous_node = previous_node->next;
+			}
+
+			Single_Linked_Node<T>* next_node = previous_node->next;
+
+			Single_Linked_Node<T>* node = new Single_Linked_Node<T>(data);
+
+			node->next = next_node;
+
+			previous_node->next = node;
+
+			count++;
 		}
 
-		void Ordered_Add(const Data_Type& data)
+		Single_Linked_Node<T>* Get(const unsigned long long& index)
 		{
+			if(index < 0 || index > count)
+			{
+				return nullptr;
+			}
 
-		}
+			Single_Linked_List<T>* node = head;
 
-		void Delete_All(const Data_Type& data)
-		{
+			for(unsigned long long i = 0; i < index; ++i)
+			{
+				node = node->next;
+			}
 
-		}
-
-		void Delete_First(const Data_Type& data)
-		{
-
+			return node;
 		}
 	};
 }
