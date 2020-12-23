@@ -1,30 +1,44 @@
 #include <iostream>
 
-#include "Static_Array.h"
+#include "Linked_List.h"
 
-Data_Structures::Static_Array<int, 10> static_array({10,11,12,13,14,15,16,17,18,19,20,21,22});
+Data_Structures::Linked_List<int, 1> linked_list;
 
 int main()
 {
-	//static_array = {10,11,12,13,14,15,16,17,18,19,20,21,22};
-
-	for(unsigned long long i = 0; i < static_array.Size(); i++)
+	for(unsigned long long i = 0; i < 10; i++)
 	{
-		std::cout << static_array[i] << '\n';
+		linked_list.Insert_Tail(i);
+	}
+
+	for(unsigned long long i = 0; i < linked_list.Count(); i++)
+	{
+		std::cout << linked_list.Get_Data(i) << '\n';
 	}
 
 	std::cout << '\n';
+	//linked_list.Clear();
+	//linked_list.Insert(4, 2000);
+	//linked_list.Insert_Head(4000);
+	//linked_list.Insert_Tail(8000);
 
-	//static_array.Clear();
-	//static_array.Fill({});
-	//static_array.Remove_Value(10);
-	//static_array.Ordered_Remove(0);
-	//static_array.Ordered_Remove_Value(10);
-
-	for(unsigned long long i = 0; i < static_array.Count(); i++)
+	for(unsigned long long i = 0; i < linked_list.Count(); i++)
 	{
-		std::cout << static_array[i] << '\n';
+		std::cout << linked_list.Get_Data(i) << '\n';
 	}
+
+	std::cout << '\n';
+	//linked_list.Clear();
+	//linked_list.Delete(3);
+	//linked_list.Delete_Head();
+	//linked_list.Delete_Tail();
+
+	for(unsigned long long i = 0; i < linked_list.Count(); i++)
+	{
+		std::cout << linked_list.Get_Data(i) << '\n';
+	}
+
+	std::cout << '\n';
 
 	std::cin.get();
 }

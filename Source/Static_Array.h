@@ -4,7 +4,7 @@
 
 namespace Data_Structures
 {
-	template<typename Data_Type, const unsigned long long Array_Size>
+	template<typename Data_Type, unsigned long long Array_Size>
 	class Static_Array
 	{
 	private:

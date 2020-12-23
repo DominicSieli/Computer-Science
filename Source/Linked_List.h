@@ -1,61 +1,151 @@
 #pragma once
 
-#include "Single_Linked_Node.h"
+#include "Node.h"
 
 namespace Data_Structures
 {
-	template<typename T>
-	class Single_Linked_List
+	template<typename T, unsigned short N>
+	class Linked_List
 	{
 	private:
 		unsigned long long count {};
 
 	public:
-		Single_Linked_Node<T>* head {};
-		Single_Linked_Node<T>* tail {};
+		Node<T, N>* head {};
+		Node<T, N>* tail {};
 
 	public:
-		Single_Linked_List()
+		Linked_List()
 		{}
 
-		~Single_Linked_List()
+		~Linked_List()
 		{}
 
 		void Clear()
 		{
-
+			while(count != 0)
+			{
+				Delete_Head();
+			}
 		}
 
-		void Search(const T& data)
+		T Search(const T& data)
 		{
+			if(count == 0)
+			{
+				return {};
+			}
 
+			unsigned long long index = 0;
+
+			Node<T, N>* node = head;
+
+			while(node->data != data)
+			{
+				index++;
+				node = node->links[0];
+
+				if(node == nullptr)
+				{
+					return {};
+				}
+			}
+
+			return index;
 		}
 
 		void Delete_Head()
 		{
+			if(count == 0)
+			{
+				return;
+			}
 
+			Node<T, N>* node = head;
+			head = head->links[0];
+
+			delete node;
+			count--;
 		}
 
 		void Delete_Tail()
 		{
+			if(count == 0)
+			{
+				return;
+			}
 
+			if(count == 1)
+			{
+				Delete_Head();
+				return;
+			}
+
+			Node<T, N>* previous_node = head;
+
+			Node<T, N>* node = head->links[0];
+
+			while(node->links[0] != nullptr)
+			{
+				previous_node = previous_node->links[0];
+				node = node->links[0];
+			}
+
+			previous_node->links[0] = nullptr;
+			tail = previous_node;
+
+			delete node;
+			count--;
 		}
 
 		unsigned long long Count()
 		{
-
+			return count;
 		}
 
 		void Delete(const unsigned long long& index)
 		{
+			if(count == 0)
+			{
+				return;
+			}
 
+			if(index < 0 || index > count)
+			{
+				return;
+			}
+
+			if(index == 0)
+			{
+				Delete_Head();
+				return;
+			}
+
+			if(index == count - 1)
+			{
+				Delete_Tail();
+				return;
+			}
+
+			Node<T, N>* previous_node = head;
+
+			for(unsigned long long i = 0; i < index; ++i)
+			{
+				previous_node = previous_node->links[0];
+			}
+
+			Node<T, N>* node = previous_node->links[0];
+			Node<T, N>* next_node = node->links[0];
+			previous_node->links[0] = next_node;
+			delete node;
+			count--;
 		}
 
 		void Insert_Head(const T& data)
 		{
-			Single_Linked_Node<T>* node = new Single_Linked_Node<T>(data);
+			Node<T, N>* node = new Node<T, N>(data);
 
-			node->next = head;
+			node->links[0] = head;
 
 			head = node;
 
@@ -75,9 +165,9 @@ namespace Data_Structures
 				return;
 			}
 
-			Single_Linked_Node<T>* node = new Single_Linked_Node<T>(data);
+			Node<T, N>* node = new Node<T, N>(data);
 
-			tail->next = node;
+			tail->links[0] = node;
 
 			tail = node;
 
@@ -102,36 +192,53 @@ namespace Data_Structures
 				return;
 			}
 
-			Single_Linked_Node<T>* previous_node = head;
+			Node<T, N>* previous_node = head;
 
 			for(unsigned long long i = 0; i < index - 1; ++i)
 			{
-				previous_node = previous_node->next;
+				previous_node = previous_node->links[0];
 			}
 
-			Single_Linked_Node<T>* next_node = previous_node->next;
+			Node<T, N>* next_node = previous_node->links[0];
 
-			Single_Linked_Node<T>* node = new Single_Linked_Node<T>(data);
+			Node<T, N>* node = new Node<T, N>(data);
 
-			node->next = next_node;
+			node->links[0] = next_node;
 
-			previous_node->next = node;
+			previous_node->links[0] = node;
 
 			count++;
 		}
 
-		Single_Linked_Node<T>* Get(const unsigned long long& index)
+		T Get_Data(const unsigned long long& index)
+		{
+			if(index < 0 || index > count)
+			{
+				return {};
+			}
+
+			Node<T, N>* node = head;
+
+			for(unsigned long long i = 0; i < index; ++i)
+			{
+				node = node->links[0];
+			}
+
+			return node->data;
+		}
+
+		Node<T, N>* Get_Address(const unsigned long long& index)
 		{
 			if(index < 0 || index > count)
 			{
 				return nullptr;
 			}
 
-			Single_Linked_List<T>* node = head;
+			Node<T, N>* node = head;
 
 			for(unsigned long long i = 0; i < index; ++i)
 			{
-				node = node->next;
+				node = node->links[0];
 			}
 
 			return node;
