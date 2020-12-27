@@ -4,41 +4,42 @@
 
 namespace Data_Structures
 {
-	template<typename T, unsigned short N>
-	class Linked_List
+	template<typename T>
+	class Single_Link_List
 	{
 	private:
-		unsigned long long count {};
+	    unsigned long long count = 0;
+	    static const unsigned short Links = 1;
 
 	public:
-		Node<T, N>* head {};
-		Node<T, N>* tail {};
+		Node<T, Links>* head = nullptr;
+		Node<T, Links>* tail = nullptr;
 
 	public:
-		Linked_List()
+		Single_Link_List()
 		{}
 
-		~Linked_List()
+		~Single_Link_List()
 		{}
 
 		void Clear()
 		{
-			while(count != 0)
+			while(count > 0)
 			{
 				Delete_Head();
 			}
 		}
 
-		T Search(const T& data)
+		unsigned long long Search(const T& data)
 		{
 			if(count == 0)
 			{
-				return {};
+				return 0;
 			}
 
 			unsigned long long index = 0;
 
-			Node<T, N>* node = head;
+			Node<T, Links>* node = head;
 
 			while(node->data != data)
 			{
@@ -47,7 +48,7 @@ namespace Data_Structures
 
 				if(node == nullptr)
 				{
-					return {};
+					return 0;
 				}
 			}
 
@@ -61,9 +62,8 @@ namespace Data_Structures
 				return;
 			}
 
-			Node<T, N>* node = head;
+			Node<T, Links>* node = head;
 			head = head->links[0];
-
 			delete node;
 			count--;
 		}
@@ -81,9 +81,8 @@ namespace Data_Structures
 				return;
 			}
 
-			Node<T, N>* previous_node = head;
-
-			Node<T, N>* node = head->links[0];
+			Node<T, Links>* previous_node = head;
+			Node<T, Links>* node = head->links[0];
 
 			while(node->links[0] != nullptr)
 			{
@@ -93,7 +92,6 @@ namespace Data_Structures
 
 			previous_node->links[0] = nullptr;
 			tail = previous_node;
-
 			delete node;
 			count--;
 		}
@@ -127,15 +125,15 @@ namespace Data_Structures
 				return;
 			}
 
-			Node<T, N>* previous_node = head;
+			Node<T, Links>* previous_node = head;
 
 			for(unsigned long long i = 0; i < index; ++i)
 			{
 				previous_node = previous_node->links[0];
 			}
 
-			Node<T, N>* node = previous_node->links[0];
-			Node<T, N>* next_node = node->links[0];
+			Node<T, Links>* node = previous_node->links[0];
+			Node<T, Links>* next_node = node->links[0];
 			previous_node->links[0] = next_node;
 			delete node;
 			count--;
@@ -143,10 +141,8 @@ namespace Data_Structures
 
 		void Insert_Head(const T& data)
 		{
-			Node<T, N>* node = new Node<T, N>(data);
-
+			Node<T, Links>* node = new Node<T, Links>(data);
 			node->links[0] = head;
-
 			head = node;
 
 			if(count == 0)
@@ -165,12 +161,9 @@ namespace Data_Structures
 				return;
 			}
 
-			Node<T, N>* node = new Node<T, N>(data);
-
+			Node<T, Links>* node = new Node<T, Links>(data);
 			tail->links[0] = node;
-
 			tail = node;
-
 			count++;
 		}
 
@@ -192,21 +185,17 @@ namespace Data_Structures
 				return;
 			}
 
-			Node<T, N>* previous_node = head;
+			Node<T, Links>* previous_node = head;
 
 			for(unsigned long long i = 0; i < index - 1; ++i)
 			{
 				previous_node = previous_node->links[0];
 			}
 
-			Node<T, N>* next_node = previous_node->links[0];
-
-			Node<T, N>* node = new Node<T, N>(data);
-
+			Node<T, Links>* next_node = previous_node->links[0];
+			Node<T, Links>* node = new Node<T, Links>(data);
 			node->links[0] = next_node;
-
 			previous_node->links[0] = node;
-
 			count++;
 		}
 
@@ -217,7 +206,7 @@ namespace Data_Structures
 				return {};
 			}
 
-			Node<T, N>* node = head;
+			Node<T, Links>* node = head;
 
 			for(unsigned long long i = 0; i < index; ++i)
 			{
@@ -227,14 +216,14 @@ namespace Data_Structures
 			return node->data;
 		}
 
-		Node<T, N>* Get_Address(const unsigned long long& index)
+		Node<T, Links>* Get_Address(const unsigned long long& index)
 		{
 			if(index < 0 || index > count)
 			{
 				return nullptr;
 			}
 
-			Node<T, N>* node = head;
+			Node<T, Links>* node = head;
 
 			for(unsigned long long i = 0; i < index; ++i)
 			{

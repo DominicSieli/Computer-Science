@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "Linked_List.h"
+#include "Single_Link_List.h"
 
-Data_Structures::Linked_List<int, 1> linked_list;
+Data_Structures::Single_Link_List<int> linked_list;
 
 int main()
 {
@@ -18,9 +18,9 @@ int main()
 
 	std::cout << '\n';
 	//linked_list.Clear();
-	//linked_list.Insert(4, 2000);
-	//linked_list.Insert_Head(4000);
-	//linked_list.Insert_Tail(8000);
+	linked_list.Insert(4, 2000);
+	linked_list.Insert_Head(4000);
+	linked_list.Insert_Tail(8000);
 
 	for(unsigned long long i = 0; i < linked_list.Count(); i++)
 	{
@@ -29,9 +29,9 @@ int main()
 
 	std::cout << '\n';
 	//linked_list.Clear();
-	//linked_list.Delete(3);
-	//linked_list.Delete_Head();
-	//linked_list.Delete_Tail();
+	linked_list.Delete(4);
+	linked_list.Delete_Head();
+	linked_list.Delete_Tail();
 
 	for(unsigned long long i = 0; i < linked_list.Count(); i++)
 	{
@@ -39,6 +39,8 @@ int main()
 	}
 
 	std::cout << '\n';
+
+	std::cout << linked_list.Search(2000) << '\n';
 
 	std::cin.get();
 }
