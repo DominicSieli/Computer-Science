@@ -1,19 +1,27 @@
 #include <iostream>
 
-#include "Deque.h"
+#include "Single_Link_List.h"
 
-Data_Structures::Deque<int> deque;
+Data_Structures::Single_Link_List<int> list;
 
 int main()
 {
 	for(int i = 0; i < 10; i++)
 	{
-		deque.Enqueue_Front(i);
+		list.Insert_Head(i);
 	}
 
-	while(!deque.Empty())
+	for(int i = 0; i < 10; i++)
 	{
-		std::cout << deque.Dequeue_Front() << '\n';
+		std::cout << list.Get_Data(i) << '\n';
+	}
+
+	std::cout << '\n';
+	list.Reverse();
+
+	for(int i = 0; i < 10; i++)
+	{
+		std::cout << list.Get_Data(i) << '\n';
 	}
 
 	std::cin.get();

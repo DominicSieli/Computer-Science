@@ -232,5 +232,23 @@ namespace Data_Structures
 
 			return node;
 		}
+
+		void Reverse()
+		{
+			tail = head;
+			Node<T, Links>* next = nullptr;
+			Node<T, Links>* current = head;
+			Node<T, Links>* previous = nullptr;
+
+			while(current != nullptr)
+			{
+				next = current->links[0];
+				current->links[0] = previous;
+				previous = current;
+				current = next;
+			}
+
+			head = previous;
+		}
 	};
 }
