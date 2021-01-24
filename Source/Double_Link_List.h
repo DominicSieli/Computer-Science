@@ -1,21 +1,27 @@
 #pragma once
 
-#include "Node.h"
-
 namespace Data_Structures
 {
 	template<typename T>
 	class Double_Link_List
 	{
 	private:
-	    unsigned long long count = 0;
-	    static const unsigned short Links = 2;
+		unsigned long long count = 0;
+
+		struct Node
+		{
+			T data {};
+			Node* next = nullptr;
+			Node* previous = nullptr;
+
+			Node(const T& data = {}) : data{data}
+			{}
+		};
 
 	public:
-		Node<T, Links>* head = nullptr;
-		Node<T, Links>* tail = nullptr;
+		Node* head = nullptr;
+		Node* tail = nullptr;
 
-	public:
 		Double_Link_List()
 		{}
 
@@ -39,17 +45,17 @@ namespace Data_Structures
 
 			unsigned long long index = 0;
 
-			Node<T, Links>* node = head;
+			Node* node = head;
 
 			while(node->data != data)
 			{
-				index++;
-				node = node->links[1];
-
 				if(node == nullptr)
 				{
 					return 0;
 				}
+
+				index++;
+				node = node->next;
 			}
 
 			return index;
@@ -62,10 +68,15 @@ namespace Data_Structures
 				return;
 			}
 
-			Node<T, Links>* node = head;
-			head = head->links[1];
+			Node* node = head;
+			head = head->next;
 			delete node;
 			count--;
+
+			if(count <= 1)
+			{
+				tail = head;
+			}
 		}
 
 		void Delete_Tail()
@@ -81,11 +92,16 @@ namespace Data_Structures
 				return;
 			}
 
-			Node<T, Links>* tail_pointer = tail;
-			tail = tail->links[0];
-			tail->links[1] = nullptr;
+			Node* tail_pointer = tail;
+			tail = tail->previous;
+			tail->next = nullptr;
 			delete tail_pointer;
 			count--;
+
+			if(count <= 1)
+			{
+				tail = head;
+			}
 		}
 
 		unsigned long long Count()
@@ -117,33 +133,43 @@ namespace Data_Structures
 				return;
 			}
 
-			Node<T, Links>* previous_node = head;
+			Node* previous_node = head;
 
 			for(unsigned long long i = 0; i < index; ++i)
 			{
-				previous_node = previous_node->links[1];
+				previous_node = previous_node->next;
 			}
 
-			Node<T, Links>* node = previous_node->links[1];
-			Node<T, Links>* next_node = node->links[1];
-			previous_node->links[1] = next_node;
-			next_node->links[0] = previous_node;
+			Node* node = previous_node->next;
+			Node* next_node = node->next;
+			previous_node->next = next_node;
+			next_node->previous = previous_node;
 			delete node;
 			count--;
+
+			if(count <= 1)
+			{
+				tail = head;
+			}
 		}
 
 		void Insert_Head(const T& data)
 		{
-			Node<T, Links>* node = new Node<T, Links>(data);
-			node->links[1] = head;
-			head = node;
+			Node* node = new Node(data);
 
-			if(count == 0)
+			if(count > 0)
+			{
+				node->next = head;
+				head->previous = node;
+			}
+
+			head = node;
+			count++;
+
+			if(count <= 1)
 			{
 				tail = head;
 			}
-
-			count++;
 		}
 
 		void Insert_Tail(const T& data)
@@ -154,11 +180,16 @@ namespace Data_Structures
 				return;
 			}
 
-			Node<T, Links>* node = new Node<T, Links>(data);
-			tail->links[1] = node;
-			node->links[0] = tail;
+			Node* node = new Node(data);
+			tail->next = node;
+			node->previous = tail;
 			tail = node;
 			count++;
+
+			if(count <= 1)
+			{
+				tail = head;
+			}
 		}
 
 		void Insert(const unsigned long long& index, const T& data)
@@ -179,20 +210,25 @@ namespace Data_Structures
 				return;
 			}
 
-			Node<T, Links>* previous_node = head;
+			Node* previous_node = head;
 
 			for(unsigned long long i = 0; i < index - 1; ++i)
 			{
-				previous_node = previous_node->links[1];
+				previous_node = previous_node->next;
 			}
 
-			Node<T, Links>* next_node = previous_node->links[1];
-			Node<T, Links>* node = new Node<T, Links>(data);
-			node->links[1] = next_node;
-			node->links[0] = previous_node;
-			previous_node->links[1] = node;
-			next_node->links[0] = node;
+			Node* next_node = previous_node->next;
+			Node* node = new Node(data);
+			node->next = next_node;
+			node->previous = previous_node;
+			previous_node->next = node;
+			next_node->previous = node;
 			count++;
+
+			if(count <= 1)
+			{
+				tail = head;
+			}
 		}
 
 		T Get_Data(const unsigned long long& index)
@@ -202,31 +238,44 @@ namespace Data_Structures
 				return {};
 			}
 
-			Node<T, Links>* node = head;
+			Node* node = head;
 
 			for(unsigned long long i = 0; i < index; ++i)
 			{
-				node = node->links[1];
+				node = node->next;
 			}
 
 			return node->data;
 		}
 
-		Node<T, Links>* Get_Address(const unsigned long long& index)
+		Node* Get_Address(const unsigned long long& index)
 		{
 			if(index < 0 || index > count)
 			{
 				return nullptr;
 			}
 
-			Node<T, Links>* node = head;
+			Node* node = head;
 
 			for(unsigned long long i = 0; i < index; ++i)
 			{
-				node = node->links[1];
+				node = node->next;
 			}
 
 			return node;
+		}
+
+		void Reverse()
+		{
+			Node* left = head;
+			Node* right = tail;
+
+			while(left != right && left->next != right)
+			{
+				std::swap(left->data, right->data);
+				left = left->next;
+				right = right->previous;
+			}
 		}
 	};
 }
