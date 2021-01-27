@@ -22,11 +22,29 @@ namespace Data_Structures
 		Node* tail = nullptr;
 
 	public:
-		Double_Link_List()
-		{}
+		Double_Link_List(const std::initializer_list<T>& data = {})
+		{
+			for(T value : data)
+			{
+				Insert_Head(value);
+			}
+		}
+
+		Double_Link_List(const Double_Link_List& copy_list)
+		{
+			Node* node = copy.Head();
+
+			while(node != nullptr)
+			{
+				Insert_Head(node->data);
+				node = node->next;
+			}
+		}
 
 		~Double_Link_List()
-		{}
+		{
+			Clear();
+		}
 
 		bool Empty()
 		{
@@ -46,29 +64,61 @@ namespace Data_Structures
 			}
 		}
 
-		unsigned long long Search(const T& data)
+		Node* Head() const
+		{
+			return head;
+		}
+
+		Node* Tail() const
+		{
+			return tail;
+		}
+
+		T& operator[](const unsigned long long& index)
+		{
+			Node* node = head;
+
+			for(unsigned long long i = 0; i < index; ++i)
+			{
+				node = node->next;
+			}
+
+			return node->data;
+		}
+
+		constexpr T& operator[](const unsigned long long& index) const
+		{
+			Node* node = head;
+
+			for(unsigned long long i = 0; i < index; ++i)
+			{
+				node = node->next;
+			}
+
+			return node->data;
+		}
+
+		unsigned long long Contains(const T& data)
 		{
 			if(Empty())
 			{
 				return 0;
 			}
 
-			unsigned long long index = 0;
-
 			Node* node = head;
+			unsigned long long data_count = 0;
 
-			while(node->data != data)
+			while(node != nullptr)
 			{
-				index++;
-				node = node->next;
-
-				if(node == nullptr)
+				if(node->data == data)
 				{
-					return 0;
+					data_count++;
 				}
+
+				node = node->next;
 			}
 
-			return index;
+			return data_count;
 		}
 
 		void Delete_Head()

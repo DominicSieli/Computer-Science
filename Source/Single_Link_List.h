@@ -1,13 +1,13 @@
 #pragma once
 
+#include <initializer_list>
+
 namespace Data_Structures
 {
 	template<typename T>
 	class Single_Link_List
 	{
 	private:
-		unsigned long long count = 0;
-
 		struct Node
 		{
 			T data {};
@@ -19,13 +19,32 @@ namespace Data_Structures
 
 		Node* head = nullptr;
 		Node* tail = nullptr;
+		unsigned long long count = 0;
 
 	public:
-		Single_Link_List()
-		{}
+		Single_Link_List(const std::initializer_list<T>& data = {})
+		{
+			for(T value : data)
+			{
+				Insert_Head(value);
+			}
+		}
+
+		Single_Link_List(const Single_Link_List& copy)
+		{
+			Node* node = copy.Head();
+
+			while(node != nullptr)
+			{
+				Insert_Head(node->data);
+				node = node->next;
+			}
+		}
 
 		~Single_Link_List()
-		{}
+		{
+			Clear();
+		}
 
 		bool Empty()
 		{
@@ -45,29 +64,80 @@ namespace Data_Structures
 			}
 		}
 
-		unsigned long long Search(const T& data)
+		Node* Head() const
+		{
+			return head;
+		}
+
+		Node* Tail() const
+		{
+			return tail;
+		}
+
+		T& operator[](const unsigned long long& index)
+		{
+			Node* node = head;
+
+			for(unsigned long long i = 0; i < index; ++i)
+			{
+				node = node->next;
+			}
+
+			return node->data;
+		}
+
+		constexpr T& operator[](const unsigned long long& index) const
+		{
+			Node* node = head;
+
+			for(unsigned long long i = 0; i < index; ++i)
+			{
+				node = node->next;
+			}
+
+			return node->data;
+		}
+
+		void operator=(const Single_Link_List& copy)
+		{
+			Node* node = copy.Head();
+
+			while(node != nullptr)
+			{
+				Insert_Head(node->data);
+				node = node->next;
+			}
+		}
+
+		void operator=(const std::initializer_list<T>& data)
+		{
+			for(T value : data)
+			{
+				Insert_Head(value);
+			}
+		}
+
+		unsigned long long Contains(const T& data)
 		{
 			if(Empty())
 			{
 				return 0;
 			}
 
-			unsigned long long index = 0;
-
 			Node* node = head;
+			unsigned long long data_count = 0;
 
-			while(node->data != data)
+			while(node != nullptr)
 			{
-				index++;
-				node = node->next;
-
-				if(node == nullptr)
+				if(node->data == data)
 				{
-					return 0;
+					data_count++;
 				}
+
+				node = node->next;
 			}
 
-			return index;
+			return data_count;
 		}
 
 		void Delete_Head()
@@ -214,24 +284,7 @@ namespace Data_Structures
 			count++;
 		}
 
-		T Get_Data(const unsigned long long& index)
-		{
-			if(Empty() || index < 0 || index > count)
-			{
-				return {};
-			}
-
-			Node* node = head;
-
-			for(unsigned long long i = 0; i < index; ++i)
-			{
-				node = node->next;
-			}
-
-			return node->data;
-		}
-
-		Node* Get_Address(const unsigned long long& index)
+		Node* Get_Node(const unsigned long long& index)
 		{
 			if(Empty() || index < 0 || index > count)
 			{
