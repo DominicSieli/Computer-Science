@@ -17,7 +17,6 @@ namespace Data_Structures
 			{}
 		};
 
-	public:
 		Node* head = nullptr;
 		Node* tail = nullptr;
 
@@ -28,9 +27,19 @@ namespace Data_Structures
 		~Single_Link_List()
 		{}
 
+		bool Empty()
+		{
+			return head == nullptr;
+		}
+
+		unsigned long long Count()
+		{
+			return count;
+		}
+
 		void Clear()
 		{
-			while(count > 0)
+			while(!Empty())
 			{
 				Delete_Head();
 			}
@@ -38,7 +47,7 @@ namespace Data_Structures
 
 		unsigned long long Search(const T& data)
 		{
-			if(count == 0)
+			if(Empty())
 			{
 				return 0;
 			}
@@ -63,20 +72,26 @@ namespace Data_Structures
 
 		void Delete_Head()
 		{
-			if(count == 0)
+			if(Empty())
 			{
 				return;
 			}
 
 			Node* node = head;
+
 			head = head->next;
 			delete node;
 			count--;
+
+			if(count == 1)
+			{
+				tail = head;
+			}
 		}
 
 		void Delete_Tail()
 		{
-			if(count == 0)
+			if(Empty())
 			{
 				return;
 			}
@@ -102,14 +117,9 @@ namespace Data_Structures
 			count--;
 		}
 
-		unsigned long long Count()
-		{
-			return count;
-		}
-
 		void Delete(const unsigned long long& index)
 		{
-			if(count == 0)
+			if(Empty())
 			{
 				return;
 			}
@@ -133,13 +143,14 @@ namespace Data_Structures
 
 			Node* previous_node = head;
 
-			for(unsigned long long i = 0; i < index; ++i)
+			for(unsigned long long i = 0; i < index - 1; ++i)
 			{
 				previous_node = previous_node->next;
 			}
 
 			Node* node = previous_node->next;
 			Node* next_node = node->next;
+
 			previous_node->next = next_node;
 			delete node;
 			count--;
@@ -148,26 +159,27 @@ namespace Data_Structures
 		void Insert_Head(const T& data)
 		{
 			Node* node = new Node(data);
+
 			node->next = head;
 			head = node;
+			count++;
 
-			if(count == 0)
+			if(count == 1)
 			{
 				tail = head;
 			}
-
-			count++;
 		}
 
 		void Insert_Tail(const T& data)
 		{
-			if(count == 0)
+			if(Empty())
 			{
 				Insert_Head(data);
 				return;
 			}
 
 			Node* node = new Node(data);
+
 			tail->next = node;
 			tail = node;
 			count++;
@@ -175,17 +187,13 @@ namespace Data_Structures
 
 		void Insert(const unsigned long long& index, const T& data)
 		{
-			if(index < 0 || index > count)
-			{
-				return;
-			}
-
-			if(index == 0)
+			if(index <= 0 || Empty())
 			{
 				Insert_Head(data);
 				return;
 			}
-			else if(index == count)
+
+			if(index >= count)
 			{
 				Insert_Tail(data);
 				return;
@@ -200,6 +208,7 @@ namespace Data_Structures
 
 			Node* next_node = previous_node->next;
 			Node* node = new Node(data);
+
 			node->next = next_node;
 			previous_node->next = node;
 			count++;
@@ -207,7 +216,7 @@ namespace Data_Structures
 
 		T Get_Data(const unsigned long long& index)
 		{
-			if(index < 0 || index > count)
+			if(Empty() || index < 0 || index > count)
 			{
 				return {};
 			}
@@ -224,7 +233,7 @@ namespace Data_Structures
 
 		Node* Get_Address(const unsigned long long& index)
 		{
-			if(index < 0 || index > count)
+			if(Empty() || index < 0 || index > count)
 			{
 				return nullptr;
 			}
@@ -241,7 +250,11 @@ namespace Data_Structures
 
 		void Reverse()
 		{
-			tail = head;
+			if(Empty())
+			{
+				return;
+			}
+
 			Node* next = nullptr;
 			Node* current = head;
 			Node* previous = nullptr;
@@ -254,7 +267,7 @@ namespace Data_Structures
 				current = next;
 			}
 
-			head = previous;
+			std::swap(head, tail);
 		}
 	};
 }

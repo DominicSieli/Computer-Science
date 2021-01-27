@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "Single_Link_List.h"
+#include "Double_Link_List.h"
 
-Data_Structures::Single_Link_List<int> list;
+Data_Structures::Double_Link_List<int> list;
 
 int main()
 {
