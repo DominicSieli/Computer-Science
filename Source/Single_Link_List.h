@@ -22,21 +22,21 @@ namespace Data_Structures
 		unsigned long long count = 0;
 
 	public:
-		Single_Link_List(const std::initializer_list<T>& data = {})
+		Single_Link_List(const std::initializer_list<T>& initializer_list = {})
 		{
-			for(T value : data)
+			for(T value : initializer_list)
 			{
-				Insert_Head(value);
+				Insert_Tail(value);
 			}
 		}
 
-		Single_Link_List(const Single_Link_List& copy)
+		Single_Link_List(const Single_Link_List& list)
 		{
-			Node* node = copy.Head();
+			Node* node = list.Head();
 
 			while(node != nullptr)
 			{
-				Insert_Head(node->data);
+				Insert_Tail(node->data);
 				node = node->next;
 			}
 		}
@@ -98,22 +98,26 @@ namespace Data_Structures
 			return node->data;
 		}
 
-		void operator=(const Single_Link_List& copy)
+		void operator=(const Single_Link_List& list)
 		{
-			Node* node = copy.Head();
+			Clear();
+			
+			Node* node = list.Head();
 
 			while(node != nullptr)
 			{
-				Insert_Head(node->data);
+				Insert_Tail(node->data);
 				node = node->next;
 			}
 		}
 
 		void operator=(const std::initializer_list<T>& data)
 		{
+			Clear();
+			
 			for(T value : data)
 			{
-				Insert_Head(value);
+				Insert_Tail(value);
 			}
 		}
 
@@ -194,7 +198,7 @@ namespace Data_Structures
 				return;
 			}
 
-			if(index < 0 || index > count)
+			if(index < 0 || index >= count)
 			{
 				return;
 			}
@@ -257,48 +261,34 @@ namespace Data_Structures
 
 		void Insert(const unsigned long long& index, const T& data)
 		{
-			if(index <= 0 || Empty())
+			if(index < 0 || index > count)
+			{
+				return;
+			}
+			
+			if(index == 0 || Empty())
 			{
 				Insert_Head(data);
 				return;
 			}
 
-			if(index >= count)
+			if(index == count)
 			{
 				Insert_Tail(data);
 				return;
 			}
 
 			Node* previous_node = head;
+			Node* node = new Node(data);
 
 			for(unsigned long long i = 0; i < index - 1; ++i)
 			{
 				previous_node = previous_node->next;
 			}
 
-			Node* next_node = previous_node->next;
-			Node* node = new Node(data);
-
-			node->next = next_node;
+			node->next = previous_node->next;
 			previous_node->next = node;
 			count++;
-		}
-
-		Node* Get_Node(const unsigned long long& index)
-		{
-			if(Empty() || index < 0 || index > count)
-			{
-				return nullptr;
-			}
-
-			Node* node = head;
-
-			for(unsigned long long i = 0; i < index; ++i)
-			{
-				node = node->next;
-			}
-
-			return node;
 		}
 
 		void Reverse()
