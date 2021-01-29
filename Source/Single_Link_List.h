@@ -32,7 +32,7 @@ namespace Data_Structures
 
 		Single_Link_List(const Single_Link_List& list)
 		{
-			Node* node = list.Head();
+			Node* node = list.head;
 
 			while(node != nullptr)
 			{
@@ -64,14 +64,14 @@ namespace Data_Structures
 			}
 		}
 
-		Node* Head() const
+		T Head() const
 		{
-			return head;
+			return head->data;
 		}
 
-		Node* Tail() const
+		T Tail() const
 		{
-			return tail;
+			return tail->data;
 		}
 
 		T& operator[](const unsigned long long& index)
@@ -101,8 +101,8 @@ namespace Data_Structures
 		void operator=(const Single_Link_List& list)
 		{
 			Clear();
-			
-			Node* node = list.Head();
+
+			Node* node = list.head;
 
 			while(node != nullptr)
 			{
@@ -114,7 +114,7 @@ namespace Data_Structures
 		void operator=(const std::initializer_list<T>& data)
 		{
 			Clear();
-			
+
 			for(T value : data)
 			{
 				Insert_Tail(value);
@@ -156,11 +156,6 @@ namespace Data_Structures
 			head = head->next;
 			delete node;
 			count--;
-
-			if(count == 1)
-			{
-				tail = head;
-			}
 		}
 
 		void Delete_Tail()
@@ -265,7 +260,7 @@ namespace Data_Structures
 			{
 				return;
 			}
-			
+
 			if(index == 0 || Empty())
 			{
 				Insert_Head(data);

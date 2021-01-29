@@ -1,13 +1,13 @@
 #pragma once
 
+#include <initializer_list>
+
 namespace Data_Structures
 {
 	template<typename T>
 	class Double_Link_List
 	{
 	private:
-		unsigned long long count = 0;
-
 		struct Node
 		{
 			T data {};
@@ -20,23 +20,24 @@ namespace Data_Structures
 
 		Node* head = nullptr;
 		Node* tail = nullptr;
+		unsigned long long count = 0;
 
 	public:
-		Double_Link_List(const std::initializer_list<T>& data = {})
+		Double_Link_List(const std::initializer_list<T>& initializer_list = {})
 		{
-			for(T value : data)
+			for(T value : initializer_list)
 			{
-				Insert_Head(value);
+				Insert_Tail(value);
 			}
 		}
 
-		Double_Link_List(const Double_Link_List& copy_list)
+		Double_Link_List(const Double_Link_List& list)
 		{
-			Node* node = copy.Head();
+			Node* node = list.head;
 
 			while(node != nullptr)
 			{
-				Insert_Head(node->data);
+				Insert_Tail(node->data);
 				node = node->next;
 			}
 		}
@@ -64,14 +65,14 @@ namespace Data_Structures
 			}
 		}
 
-		Node* Head() const
+		T Head() const
 		{
-			return head;
+			return head->data;
 		}
 
-		Node* Tail() const
+		T Tail() const
 		{
-			return tail;
+			return tail->data;
 		}
 
 		T& operator[](const unsigned long long& index)
@@ -96,6 +97,29 @@ namespace Data_Structures
 			}
 
 			return node->data;
+		}
+
+		void operator=(const Double_Link_List& list)
+		{
+			Clear();
+
+			Node* node = list.head;
+
+			while(node != nullptr)
+			{
+				Insert_Tail(node->data);
+				node = node->next;
+			}
+		}
+
+		void operator=(const std::initializer_list<T>& data)
+		{
+			Clear();
+
+			for(T value : data)
+			{
+				Insert_Tail(value);
+			}
 		}
 
 		unsigned long long Contains(const T& data)
@@ -133,11 +157,6 @@ namespace Data_Structures
 			head = head->next;
 			delete node;
 			count--;
-
-			if(count == 1)
-			{
-				tail = head;
-			}
 		}
 
 		void Delete_Tail()
@@ -158,11 +177,6 @@ namespace Data_Structures
 			tail->next = nullptr;
 			delete tail_pointer;
 			count--;
-
-			if(count == 1)
-			{
-				tail = head;
-			}
 		}
 
 		void Delete(const unsigned long long& index)
@@ -172,7 +186,7 @@ namespace Data_Structures
 				return;
 			}
 
-			if(index < 0 || index > count)
+			if(index < 0 || index >= count)
 			{
 				return;
 			}
@@ -243,67 +257,34 @@ namespace Data_Structures
 
 		void Insert(const unsigned long long& index, const T& data)
 		{
-			if(index <= 0 || Empty())
+			if(index < 0 || index > count)
+			{
+				return;
+			}
+
+			if(index == 0 || Empty())
 			{
 				Insert_Head(data);
 				return;
 			}
 
-			if(index >= count)
+			if(index == count)
 			{
 				Insert_Tail(data);
 				return;
 			}
 
 			Node* previous_node = head;
+			Node* node = new Node(data);
 
 			for(unsigned long long i = 0; i < index - 1; ++i)
 			{
 				previous_node = previous_node->next;
 			}
 
-			Node* next_node = previous_node->next;
-			Node* node = new Node(data);
-
-			node->next = next_node;
-			node->previous = previous_node;
+			node->next = previous_node->next;
 			previous_node->next = node;
-			next_node->previous = node;
 			count++;
-		}
-
-		T Get_Data(const unsigned long long& index)
-		{
-			if(Empty() || index < 0 || index > count)
-			{
-				return {};
-			}
-
-			Node* node = head;
-
-			for(unsigned long long i = 0; i < index; ++i)
-			{
-				node = node->next;
-			}
-
-			return node->data;
-		}
-
-		Node* Get_Address(const unsigned long long& index)
-		{
-			if(Empty() || index < 0 || index > count)
-			{
-				return nullptr;
-			}
-
-			Node* node = head;
-
-			for(unsigned long long i = 0; i < index; ++i)
-			{
-				node = node->next;
-			}
-
-			return node;
 		}
 
 		void Reverse()
