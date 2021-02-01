@@ -1,54 +1,74 @@
 #pragma once
 
-#include "Node.h"
-
 namespace Data_Structures
 {
 	template<typename T>
 	class Stack
 	{
 	private:
-	    Node<T, 1>* top = nullptr;
-	    unsigned long long count = 0;
+		struct Node
+		{
+			T data {};
+			Node* next = nullptr;
+
+			Node(const T& data) : data{data}
+			{}
+		};
+
+		Node* top = nullptr;
+		unsigned long long count = 0;
 
 	public:
 		Stack()
 		{}
 
 		~Stack()
-		{}
-
-		void Push(const T& data)
 		{
-			Node<T, 1>* node = new Node<T, 1>(data);
-			node->links[0] = top;
+			Clear();
+		}
+
+		void Push(const T& data) noexcept
+		{
+			Node* node = new Node(data);
+			node->next = top;
 			top = node;
 			count++;
 		}
 
-	    T Pop()
+		T Pop() noexcept
 		{
-			if(count == 0)
+			if(top == nullptr)
 			{
 				return {};
 			}
-			
+
 			T data = top->data;
-			Node<T, 1>* node = top;
-			top = top->links[0];
+			Node* node = top;
+			top = top->next;
 			delete node;
 			count--;
 			return data;
 		}
 
-		T Top() const
+		T Top() const noexcept
 		{
 			return top->data;
 		}
 
-		bool Empty() const
+		bool Empty() const noexcept
 		{
 			return count == 0;
+		}
+
+		void Clear() noexcept
+		{
+			while(top != nullptr)
+			{
+				Node* node = top;
+				top = top->next;
+				delete node;
+				count--;
+			}
 		}
 	};
 }
