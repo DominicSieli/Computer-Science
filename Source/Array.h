@@ -62,7 +62,8 @@ namespace Data_Structures
 		{
 			if(count < S)
 			{
-				array[count++] = data;
+				count++;
+				array[count - 1] = data;
 			}
 		}
 
@@ -70,7 +71,8 @@ namespace Data_Structures
 		{
 			if(count < S)
 			{
-				array[count++] = data;
+				count++;
+				array[count - 1] = data;
 			}
 
 			for(unsigned long long i = count - 1; i > 0; i--)
@@ -84,7 +86,12 @@ namespace Data_Structures
 
 		void Remove(const unsigned long long& index) noexcept
 		{
-			if(count > 0 && index >= 0 && index < count)
+			if(count == 0)
+			{
+				return;
+			}
+
+			if(index >= 0 && index < count)
 			{
 				count--;
 				array[index] = {};
@@ -94,7 +101,12 @@ namespace Data_Structures
 
 		void Sorted_Remove(const unsigned long long& index) noexcept
 		{
-			if(count > 0 && index >= 0 && index < count)
+			if(count == 0)
+			{
+				return;
+			}
+
+			if(index >= 0 && index < count)
 			{
 				count--;
 				array[index] = {};
@@ -121,9 +133,9 @@ namespace Data_Structures
 				return array[0];
 			}
 
-			if(index >= S)
+			if(index >= count)
 			{
-				return array[S - 1];
+				return array[count - 1];
 			}
 
 			return array[index];
@@ -136,9 +148,9 @@ namespace Data_Structures
 				return array[0];
 			}
 
-			if(index >= S)
+			if(index >= count)
 			{
-				return array[S - 1];
+				return array[count - 1];
 			}
 
 			return array[index];
