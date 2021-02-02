@@ -1,15 +1,22 @@
 #pragma once
 
-#include "Node.h"
-
 namespace Data_Structures
 {
 	template<typename T>
 	class Queue
 	{
 	private:
-	    Node<T, 1>* back = nullptr;
-	    Node<T, 1>* front = nullptr;
+		struct Node
+		{
+			T data {};
+			Node* next = nullptr;
+
+			Node(const T& data = {}, Node* next = nullptr) : data{data}, next{next}
+			{}
+		};
+
+	    Node* back = nullptr;
+	    Node* front = nullptr;
 	    unsigned long long count = 0;
 
 	public:
@@ -17,50 +24,62 @@ namespace Data_Structures
 		{}
 
 		~Queue()
-		{}
-
-		void Enqueue(const T& data)
 		{
-			Node<T, 1>* node = new Node<T, 1>(data);
-			
-			if(count == 0)
+			Clear();
+		}
+
+		void Enqueue(const T& data) noexcept
+		{
+			count++;
+			Node* node = new Node(data);
+
+			if(front == nullptr)
 			{
-				node->links[0] = nullptr;
+				node->next = nullptr;
 				front = node;
-				back = front;
+				back = node;
 			}
 			else
 			{
-				back->links[0] = node;
+				back->next = node;
 				back = node;
 			}
-			
-			count++;
 		}
 
-	    T Dequeue()
+	    T Dequeue() noexcept
 		{
-			if(count == 0)
+			if(front != nullptr)
 			{
-				return {};
+				count--;
+				T data = front->data;
+				Node* node = front;
+				front = front->next;
+				delete node;
+				return data;
 			}
-			
-			T data = front->data;
-			Node<T, 1>* node = front;
-			front = front->links[0];
-			delete node;
-			count--;
-			return data;
+
+			return {};
 		}
 
-		T Front() const
+		T Front() const noexcept
 		{
 			return front->data;
 		}
 
-		bool Empty() const
+		bool Empty() const noexcept
 		{
-			return count == 0;
+			return front == nullptr;
+		}
+
+		void Clear() noexcept
+		{
+			while(front != nullptr)
+			{
+				count--;
+				Node* node = front;
+				front = front->next;
+				delete node;
+			}
 		}
 	};
 }

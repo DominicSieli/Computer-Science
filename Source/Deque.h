@@ -1,15 +1,23 @@
 #pragma once
 
-#include "Node.h"
-
 namespace Data_Structures
 {
 	template<typename T>
 	class Deque
 	{
 	private:
-	    Node<T, 2>* back = nullptr;
-	    Node<T, 2>* front = nullptr;
+		struct Node
+		{
+			T data {};
+			Node* next = nullptr;
+			Node* previous = nullptr;
+
+			Node(const T& data = {}, Node* next = nullptr, Node* previous = nullptr) : data{data}, next{next}, previous{previous}
+			{}
+		};
+
+	    Node* back = nullptr;
+	    Node* front = nullptr;
 	    unsigned long long count = 0;
 
 	public:
@@ -17,99 +25,108 @@ namespace Data_Structures
 		{}
 
 		~Deque()
-		{}
-
-		void Enqueue_Back(const T& data)
 		{
-			if(count == 0)
+			Clear();
+		}
+
+		void Enqueue_Back(const T& data) noexcept
+		{
+			if(front == nullptr)
 			{
 				Enqueue_Front(data);
 				return;
 			}
-			
-			Node<T, 2>* node = new Node<T, 2>(data);
-			
-			back->links[1] = node;
-			node->links[0] = back;
-			back = node;
+
 			count++;
+			Node* node = new Node(data, nullptr, back);
+			back->next = node;
+			back = node;
 		}
-		
-		void Enqueue_Front(const T& data)
+
+		void Enqueue_Front(const T& data) noexcept
 		{
-			Node<T, 2>* node = new Node<T, 2>(data);
-			node->links[1] = front;
-			
+			count++;
+			Node* node = new Node(data, front, nullptr);
+
 			if(front != nullptr)
 			{
-				front->links[0] = node;
+				front->previous = node;
 			}
-			
+
 			front = node;
-			
-			if(count == 0)
+
+			if(back == nullptr)
 			{
 				back = front;
 			}
-			
-			count++;
 		}
-		
-		T Dequeue_Back()
+
+		T Dequeue_Back() noexcept
 		{
-			if(count == 0)
+			if(front == nullptr)
 			{
 				return {};
 			}
-			
+
 			if(count == 1)
 			{
 				return Dequeue_Front();
 			}
-			
-			T data = back->data;
-			Node<T, 2>* node = back;
-			back = back->links[0];
-			back->links[1] = nullptr;
-			delete node;
+
 			count--;
+			Node* node = back;
+			T data = back->data;
+			back = back->previous;
+			back->next = nullptr;
+			delete node;
 			return data;
 		}
 
-	    T Dequeue_Front()
+	    T Dequeue_Front() noexcept
 		{
-			if(count == 0)
+			if(front == nullptr)
 			{
 				return {};
 			}
-			
+
+			count--;
+			Node* node = front;
 			T data = front->data;
-			Node<T, 2>* node = front;
-			front = front->links[1];
-			delete node;
-			
+			front = front->next;
+
 			if(front != nullptr)
 			{
-				front->links[0] = nullptr;
+				front->previous = nullptr;
 			}
-			
-			count--;
+
+			delete node;
 			return data;
 		}
-		
-		T Back() const
+
+		T Back() const noexcept
 		{
 			return back->data;
 		}
 
-		T Front() const
+		T Front() const noexcept
 		{
 			return front->data;
 		}
 
-		bool Empty() const
+		bool Empty() const noexcept
 		{
-			return count == 0;
+			return front == nullptr;
+		}
+
+		void Clear() noexcept
+		{
+			while(front != nullptr)
+			{
+				count--;
+				Node* node = front;
+				front = front->next;
+				delete node;
+			}
 		}
 	};
 }

@@ -11,7 +11,7 @@ namespace Data_Structures
 			T data {};
 			Node* next = nullptr;
 
-			Node(const T& data) : data{data}
+			Node(const T& data = {}, Node* next = nullptr) : data{data}, next{next}
 			{}
 		};
 
@@ -29,25 +29,24 @@ namespace Data_Structures
 
 		void Push(const T& data) noexcept
 		{
-			Node* node = new Node(data);
-			node->next = top;
-			top = node;
 			count++;
+			Node* node = new Node(data, top);
+			top = node;
 		}
 
 		T Pop() noexcept
 		{
-			if(top == nullptr)
+			if(top != nullptr)
 			{
-				return {};
+				count--;
+				T data = top->data;
+				Node* node = top;
+				top = top->next;
+				delete node;
+				return data;
 			}
 
-			T data = top->data;
-			Node* node = top;
-			top = top->next;
-			delete node;
-			count--;
-			return data;
+			return {};
 		}
 
 		T Top() const noexcept
@@ -57,17 +56,17 @@ namespace Data_Structures
 
 		bool Empty() const noexcept
 		{
-			return count == 0;
+			return top == nullptr;
 		}
 
 		void Clear() noexcept
 		{
 			while(top != nullptr)
 			{
+				count--;
 				Node* node = top;
 				top = top->next;
 				delete node;
-				count--;
 			}
 		}
 	};
