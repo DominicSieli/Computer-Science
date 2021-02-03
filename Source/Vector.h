@@ -13,18 +13,17 @@ namespace Data_Structures
 		unsigned long long count = 0;
 
 	public:
-		Vector()
-		{}
-
-		Vector(const unsigned long long& size) : vector{new T[size]}, size{size}, count{0}
-		{}
-
-		Vector(const T& data, const unsigned long long& size) : vector{new T[size]}, size{size}, count{size}
+		Vector(const unsigned long long& initial_size = 0, const T& data = {})
 		{
-			Fill(data);
+			if(initial_size > 0)
+			{
+				size = initial_size;
+				vector = new T[initial_size];
+				Fill(data);
+			}
 		}
 
-		Vector(const std::initializer_list<T>& list)
+		Vector(const std::initializer_list<T>& list) : vector{new T[list.size()]}, size{list.size()}, count{0}
 		{
 			for(const T& data : list)
 			{
@@ -34,7 +33,7 @@ namespace Data_Structures
 
 		Vector(const Vector& copy_vector) : vector{new T[copy_vector.size]}, size{copy_vector.size}, count{copy_vector.count}
 		{
-			for(unsigned long long index = 0; index < copy_vector.Size(); index++)
+			for(unsigned long long index = 0; index < size; index++)
 			{
 				vector[index] = copy_vector[index];
 			}
@@ -58,11 +57,14 @@ namespace Data_Structures
 
 		void Fill(const T& data) noexcept
 		{
-			count = size;
-
-			for(unsigned long long index = 0; index < size; index++)
+			if(size > 0)
 			{
-				vector[index] = data;
+				count = size;
+
+				for(unsigned long long index = 0; index < size; index++)
+				{
+					vector[index] = data;
+				}
 			}
 		}
 
@@ -99,7 +101,7 @@ namespace Data_Structures
 			vector = new_vector;
 		}
 
-		void Add(const T& data, const unsigned long long expansion = size) noexcept
+		void Add(const T& data, const unsigned long long& expansion = 1) noexcept
 		{
 			count++;
 
@@ -120,7 +122,7 @@ namespace Data_Structures
 			vector[count - 1] = data;
 		}
 
-		void Sorted_Add(const T& data, const unsigned long long expansion = size) noexcept
+		void Sorted_Add(const T& data, const unsigned long long& expansion = 1) noexcept
 		{
 			count++;
 
@@ -193,32 +195,22 @@ namespace Data_Structures
 
 		T& operator[](const unsigned long long& index) noexcept
 		{
-			if(index < 0)
+			if(index >= 0 && index < count)
 			{
-				return vector[0];
+				return vector[index];
 			}
 
-			if(index >= count)
-			{
-				return vector[count - 1];
-			}
-
-			return vector[index];
+			return vector[0];
 		}
 
 		constexpr T& operator[](const unsigned long long& index) const noexcept
 		{
-			if(index < 0)
+			if(index >= 0 && index < count)
 			{
-				return vector[0];
+				return vector[index];
 			}
 
-			if(index >= count)
-			{
-				return vector[count - 1];
-			}
-
-			return vector[index];
+			return vector[0];
 		}
 
 		void operator=(const std::initializer_list<T>& list) noexcept
@@ -227,7 +219,7 @@ namespace Data_Structures
 
 			for(const T& data : list)
 			{
-				Add(data, 1);
+				Add(data);
 			}
 		}
 

@@ -1,19 +1,23 @@
 #include <iostream>
 
-#include "Deque.h"
+#include "Vector.h"
 
-Data_Structures::Deque<int> deque;
+Data_Structures::Vector<int> vector;
 
 int main()
 {
-	for(int i = 0; i < 10; i++)
+	for(unsigned long long i = 0; i < vector.Size(); i++)
 	{
-		deque.Enqueue_Back(i);
+		std::cout << vector[i] << " ";
 	}
 
-	while(!deque.Empty())
+	//vector.Sort();
+	//vector.Reverse();
+	std::cout << '\n';
+
+	for(unsigned long long i = 0; i < vector.Count(); i++)
 	{
-		std::cout << deque.Dequeue_Front() << '\n';
+		std::cout << vector[i] << " ";
 	}
 
 	std::cin.get();
