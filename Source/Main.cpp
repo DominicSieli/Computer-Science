@@ -1,24 +1,18 @@
 #include <iostream>
 
-#include "Vector.h"
+#include "Binary_Search_Tree.h"
 
-Data_Structures::Vector<int> vector;
+Data_Structures::Binary_Search_Tree<int> bst(10);
 
 int main()
 {
-	for(unsigned long long i = 0; i < vector.Size(); i++)
-	{
-		std::cout << vector[i] << " ";
-	}
+	bst.Insert(2);
+	bst.Insert(20);
+	bst.Insert(4);
+	bst.Insert(16);
+	bst.Print();
 
-	//vector.Sort();
-	//vector.Reverse();
-	std::cout << '\n';
-
-	for(unsigned long long i = 0; i < vector.Count(); i++)
-	{
-		std::cout << vector[i] << " ";
-	}
-
+	std::cout << bst.Min() << '\n';
+	std::cout << bst.Max() << '\n';
 	std::cin.get();
 }
