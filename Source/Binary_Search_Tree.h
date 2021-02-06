@@ -56,10 +56,22 @@ namespace Data_Structures
             root = Insert(root, data);
         }
 
-        // void Remove(const T& data)
-        // {
-        //     root = Remove(root, data);
-        // }
+        void Remove(const T& data)
+        {
+            root = Remove(root, data);
+        }
+
+        T Successor(const T& data)
+        {
+            Node* node = Search(root, data);
+            return node == nullptr ? 0 : Successor(node);
+        }
+
+        T Predecessor(const T& data)
+        {
+            Node* node = Search(root, data);
+            return node == nullptr ? 0 : Predecessor(node);
+        }
 
     private:
         T Min(Node* node)
@@ -154,34 +166,88 @@ namespace Data_Structures
             return node;
         }
 
-        // Node* Remove(Node* node, const T& data)
-        // {
-        //     if(node == nullptr)
-        //     {
-        //         return nullptr;
-        //     }
+        Node* Remove(Node* node, const T& data)
+        {
+            if(node == nullptr)
+            {
+                return nullptr;
+            }
 
-        //     if(node->data == data)
-        //     {
-        //         if(node->left == nullptr && node->right == nullptr)
-        //         {
-        //             node = nullptr;
-        //         }
-        //         else if(node->left == nullptr && node->right != nullptr)
-        //         {
-        //             node->right->parent = node->parent;
-        //             node = node->right;
-        //         }
-        //         else if(node->left != nullptr && node->right == nullptr)
-        //         {
-        //             node->left->parent = node->parent;
-        //             node = node->left;
-        //         }
-        //         else
-        //         {
+            if(node->data == data)
+            {
+                if(node->left == nullptr && node->right == nullptr)
+                {
+                    node = nullptr;
+                }
+                else if(node->left == nullptr && node->right != nullptr)
+                {
+                    node->right->parent = node->parent;
+                    node = node->right;
+                }
+                else if(node->left != nullptr && node->right == nullptr)
+                {
+                    node->left->parent = node->parent;
+                    node = node->left;
+                }
+                else
+                {
+                    T successor = Successor(data);
+                    node->data = successor;
+                    node->right = Remove(node->right, successor);
+                }
+            }
+            else if()
+            {
+                node->right = Remove(node->right, data);
+            }
+            else
+            {
+                node->left = Remove(node->left, data);
+            }
 
-        //         }
-        //     }
-        // }
+            return node;
+        }
+
+        T Successor(Node* node)
+        {
+            if(node->right != nullptr)
+            {
+                return Min(node->right);
+            }
+            else
+            {
+                Node* parent_node = node->parent;
+                Node* current_node = node;
+
+                while((parent_node != nullptr) && (current_node == parent_node->right))
+                {
+                    current_node = parent_node;
+                    parent_node = current_node->parent;
+                }
+
+                return parent_node == nullptr ? 0 : parent_node->data;
+            }
+        }
+
+        T Predecessor(Node* node)
+        {
+            if(node->left != nullptr)
+            {
+                return Max(node->left);
+            }
+            else
+            {
+                Node* parent_node = node->parent;
+                Node* current_node = node;
+
+                while((parent_node != nullptr) && (current_node == parent_node->left))
+                {
+                    current_node = parent_node;
+                    parent_node = current_node->parent;
+                }
+
+                return parent_node == nullptr ? 0 : parent_node->data;
+            }
+        }
     };
 }
