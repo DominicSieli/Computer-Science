@@ -196,11 +196,11 @@ namespace Data_Structures
                     node->right = Remove(node->right, successor);
                 }
             }
-            else if()
+            else if(node->right->data == data)
             {
                 node->right = Remove(node->right, data);
             }
-            else
+            else if(node->left->data == data)
             {
                 node->left = Remove(node->left, data);
             }
