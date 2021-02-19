@@ -4,250 +4,324 @@
 
 namespace Data_Structures
 {
-    template<typename T>
-    class Binary_Search_Tree
-    {
-    private:
-        struct Node
-        {
-            T data {};
-            Node* left = nullptr;
-            Node* right = nullptr;
-            Node* parent = nullptr;
+	template<typename T>
+	class Binary_Search_Tree
+	{
+	private:
+		struct Node
+		{
+			T data {};
+			Node* left = nullptr;
+			Node* right = nullptr;
+			Node* parent = nullptr;
 
-            Node(const T& data) : data{data}
-            {}
-        };
+			Node(const T& data) : data{data}, left{nullptr}, right{nullptr}, parent{nullptr}
+			{}
+		};
 
-        Node* root = nullptr;
+		T min_value {};
+		T max_value {};
+		Node* root = nullptr;
 
-    public:
-        Binary_Search_Tree(const T& data) : root{new Node(data)}
-        {}
+	public:
+		Binary_Search_Tree(const T& data) : min_value{data}, max_value{data}, root{new Node(data)}
+		{}
 
-        ~Binary_Search_Tree()
-        {}
+		~Binary_Search_Tree()
+		{}
 
-        T Min()
-        {
-            return Min(root);
-        }
+		void Print()
+		{
+			Print(root);
+			std::cout << '\n';
+		}
 
-        T Max()
-        {
-            return Max(root);
-        }
+		constexpr T Min_Value() const noexcept
+		{
+			return min_value;
+		}
 
-        void Print()
-        {
-            Print(root);
-            std::cout << '\n';
-        }
+		constexpr T Max_Value() const noexcept
+		{
+			return max_value;
+		}
 
-        bool Search(const T& data)
-        {
-            Node* node = Search(root, data);
+		bool Contains(const T& data) const noexcept
+		{
+			if(root == nullptr)
+			{
+				return false;
+			}
 
-            return (node == nullptr) ? false : true;
-        }
+			Node* pointer = root;
 
-        void Insert(const T& data)
-        {
-            root = Insert(root, data);
-        }
+			while(true)
+			{
+				if(pointer->data == data)
+				{
+					return true;
+				}
+				else
+				{
+					if(data < pointer->data)
+					{
+						if(pointer->left == nullptr)
+						{
+							return false;
+						}
+						else
+						{
+							pointer = pointer->left;
+							continue;
+						}
+					}
+					else if(data > pointer->data)
+					{
+						if(pointer->right == nullptr)
+						{
+							return false;
+						}
+						else
+						{
+							pointer = pointer->right;
+							continue;
+						}
+					}
+				}
+			}
+		}
 
-        void Remove(const T& data)
-        {
-            root = Remove(root, data);
-        }
+		void Insert(const T& data) noexcept
+		{
+			if(Contains(data) == true)
+			{
+				return;
+			}
 
-        T Successor(const T& data)
-        {
-            Node* node = Search(root, data);
-            return node == nullptr ? 0 : Successor(node);
-        }
+			if(data < min_value)
+			{
+				min_value = data;
+			}
 
-        T Predecessor(const T& data)
-        {
-            Node* node = Search(root, data);
-            return node == nullptr ? 0 : Predecessor(node);
-        }
+			if(data > max_value)
+			{
+				max_value = data;
+			}
 
-    private:
-        T Min(Node* node)
-        {
-            if(node == nullptr)
-            {
-                return {};
-            }
-            else if(node->left == nullptr)
-            {
-                return node->data;
-            }
-            else
-            {
-                return Min(node->left);
-            }
+			Node* pointer = root;
+			Node* node = new Node(data);
 
-            return {};
-        }
+			while(true)
+			{
+				if(root == nullptr)
+				{
+					root = node;
+					return;
+				}
 
-        T Max(Node* node)
-        {
-            if(node == nullptr)
-            {
-                return {};
-            }
-            else if(node->right == nullptr)
-            {
-                return node->data;
-            }
-            else
-            {
-                return Max(node->right);
-            }
+				if(data < pointer->data)
+				{
+					if(pointer->left != nullptr)
+					{
+						pointer = pointer->left;
+					}
+					else if(pointer->left == nullptr)
+					{
+						pointer->left = node;
+						node->parent = pointer;
+						return;
+					}
+				}
+				else if(data > pointer->data)
+				{
+					if(pointer->right != nullptr)
+					{
+						pointer = pointer->right;
+					}
+					else if(pointer->right == nullptr)
+					{
+						pointer->right = node;
+						node->parent = pointer;
+						return;
+					}
+				}
+			}
+		}
 
-            return {};
-        }
+		void Remove(const T& data) noexcept
+		{
+			if(Contains(data) == false)
+			{
+				return;
+			}
 
-        void Print(Node* node)
-        {
-            if(node == nullptr)
-            {
-                return;
-            }
+			Node* pointer = Node_Pointer(data);
+			Node* successor = Node_Successor(pointer);
 
-            Print(node->left);
-            std::cout << node->data << " ";
-            Print(node->right);
-        }
+			if(successor == nullptr)
+			{
+				if(pointer == root)
+				{
+					min_value = {};
+					max_value = {};
+					root = nullptr;
+					delete pointer;
+					return;
+				}
 
-        Node* Search(Node* node, const T& data)
-        {
-            if(node == nullptr)
-            {
-                return nullptr;
-            }
-            else if(node->data == data)
-            {
-                return node;
-            }
-            else if(node->data < data)
-            {
-                return Search(node->right, data);
-            }
-            else if(node->data > data)
-            {
-                return Search(node->left, data);
-            }
-            else
-            {
-                return nullptr;
-            }
-        }
+				if(pointer->data < pointer->parent->data)
+				{
+					if(pointer->data == min_value)
+					{
+						min_value = pointer->parent->data;
+					}
 
-        Node* Insert(Node* node, const T& data)
-        {
-            if(node == nullptr)
-            {
-                node = new Node(data);
-            }
-            else if(node->data < data)
-            {
-                node->right = Insert(node->right, data);
-                node->right->parent = node;
-            }
-            else if(node->data > data)
-            {
-                node->left = Insert(node->left, data);
-                node->left->parent = node;
-            }
+					pointer->parent->left = nullptr;
+					delete pointer;
+					return;
+				}
+				else if(pointer->data > pointer->parent->data)
+				{
+					if(pointer->data == max_value)
+					{
+						max_value = pointer->parent->data;
+					}
 
-            return node;
-        }
+					pointer->parent->right = nullptr;
+					delete pointer;
+					return;
+				}
+			}
+			else if(successor != nullptr)
+			{
+				if(pointer == root)
+				{
+					root = successor;
+					successor->parent = nullptr;
 
-        Node* Remove(Node* node, const T& data)
-        {
-            if(node == nullptr)
-            {
-                return nullptr;
-            }
+					if(pointer->left != successor)
+					{
+						successor->left = pointer->left;
+					}
 
-            if(node->data == data)
-            {
-                if(node->left == nullptr && node->right == nullptr)
-                {
-                    node = nullptr;
-                }
-                else if(node->left == nullptr && node->right != nullptr)
-                {
-                    node->right->parent = node->parent;
-                    node = node->right;
-                }
-                else if(node->left != nullptr && node->right == nullptr)
-                {
-                    node->left->parent = node->parent;
-                    node = node->left;
-                }
-                else
-                {
-                    T successor = Successor(data);
-                    node->data = successor;
-                    node->right = Remove(node->right, successor);
-                }
-            }
-            else if(node->right->data == data)
-            {
-                node->right = Remove(node->right, data);
-            }
-            else if(node->left->data == data)
-            {
-                node->left = Remove(node->left, data);
-            }
+					if(pointer->right != successor)
+					{
+						successor->right = pointer->right;
+					}
 
-            return node;
-        }
+					delete pointer;
+					return;
+				}
 
-        T Successor(Node* node)
-        {
-            if(node->right != nullptr)
-            {
-                return Min(node->right);
-            }
-            else
-            {
-                Node* parent_node = node->parent;
-                Node* current_node = node;
+				if(pointer->parent->left == pointer)
+				{
+					pointer->parent->left = successor;
+				}
+				else if(pointer->parent->right == pointer)
+				{
+					pointer->parent->right = successor;
+				}
 
-                while((parent_node != nullptr) && (current_node == parent_node->right))
-                {
-                    current_node = parent_node;
-                    parent_node = current_node->parent;
-                }
+				if(pointer->left != successor)
+				{
+					successor->left = pointer->left;
+				}
 
-                return parent_node == nullptr ? 0 : parent_node->data;
-            }
-        }
+				if(pointer->right != successor)
+				{
+					successor->right = pointer->right;
+				}
 
-        T Predecessor(Node* node)
-        {
-            if(node->left != nullptr)
-            {
-                return Max(node->left);
-            }
-            else
-            {
-                Node* parent_node = node->parent;
-                Node* current_node = node;
+				if(successor == pointer->right->left)
+				{
+					pointer->right->left = nullptr;
+				}
 
-                while((parent_node != nullptr) && (current_node == parent_node->left))
-                {
-                    current_node = parent_node;
-                    parent_node = current_node->parent;
-                }
+				delete pointer;
+				return;
+			}
+		}
 
-                return parent_node == nullptr ? 0 : parent_node->data;
-            }
-        }
-    };
+	private:
+		void Print(Node* node)
+		{
+			if(node == nullptr)
+			{
+				return;
+			}
+
+			Print(node->left);
+			std::cout << node->data << " ";
+			Print(node->right);
+		}
+
+		Node* Node_Pointer(const T& data) noexcept
+		{
+			Node* pointer = root;
+
+			while(true)
+			{
+				if(pointer->data == data)
+				{
+					return pointer;
+				}
+				else
+				{
+					if(data < pointer->data)
+					{
+						if(pointer->left == nullptr)
+						{
+							return nullptr;
+						}
+						else
+						{
+							pointer = pointer->left;
+							continue;
+						}
+					}
+					else if(data > pointer->data)
+					{
+						if(pointer->right == nullptr)
+						{
+							return nullptr;
+						}
+						else
+						{
+							pointer = pointer->right;
+							continue;
+						}
+					}
+				}
+			}
+		}
+
+		Node* Node_Successor(const Node* node)
+		{
+			if(node->left == nullptr && node->right == nullptr)
+			{
+				return nullptr;
+			}
+			else if(node->left != nullptr && node->right == nullptr)
+			{
+				return node->left;
+			}
+			else if(node->left == nullptr && node->right != nullptr)
+			{
+				return node->right;
+			}
+			else if(node->left != nullptr && node->right != nullptr)
+			{
+				if(node->right->left != nullptr)
+				{
+					return node->right->left;
+				}
+				else if(node->right->left == nullptr)
+				{
+					return node->right;
+				}
+			}
+
+			return nullptr;
+		}
+	};
 }
