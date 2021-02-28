@@ -30,7 +30,7 @@ namespace Data_Structures
 		~Binary_Search_Tree()
 		{}
 
-		void Print()
+		void Print() const noexcept
 		{
 			Print(root);
 			std::cout << '\n';
@@ -48,47 +48,7 @@ namespace Data_Structures
 
 		bool Contains(const T& data) const noexcept
 		{
-			if(root == nullptr)
-			{
-				return false;
-			}
-
-			Node* pointer = root;
-
-			while(true)
-			{
-				if(pointer->data == data)
-				{
-					return true;
-				}
-				else
-				{
-					if(data < pointer->data)
-					{
-						if(pointer->left == nullptr)
-						{
-							return false;
-						}
-						else
-						{
-							pointer = pointer->left;
-							continue;
-						}
-					}
-					else if(data > pointer->data)
-					{
-						if(pointer->right == nullptr)
-						{
-							return false;
-						}
-						else
-						{
-							pointer = pointer->right;
-							continue;
-						}
-					}
-				}
-			}
+			return Node_Pointer(data);
 		}
 
 		void Insert(const T& data) noexcept
@@ -150,100 +110,27 @@ namespace Data_Structures
 
 		void Remove(const T& data) noexcept
 		{
-			if(Contains(data) == false)
+			Node* pointer = Node_Pointer(data);
+
+			if(pointer == nullptr)
 			{
 				return;
 			}
 
-			Node* pointer = Node_Pointer(data);
 			Node* successor = Node_Successor(pointer);
 
 			if(successor == nullptr)
 			{
-				if(pointer == root)
-				{
-					min_value = {};
-					max_value = {};
-					root = nullptr;
-					delete pointer;
-					return;
-				}
-
-				if(pointer->data < pointer->parent->data)
-				{
-					if(pointer->data == min_value)
-					{
-						min_value = pointer->parent->data;
-					}
-
-					pointer->parent->left = nullptr;
-					delete pointer;
-					return;
-				}
-				else if(pointer->data > pointer->parent->data)
-				{
-					if(pointer->data == max_value)
-					{
-						max_value = pointer->parent->data;
-					}
-
-					pointer->parent->right = nullptr;
-					delete pointer;
-					return;
-				}
+				Remove_Leaf(pointer);
 			}
 			else if(successor != nullptr)
 			{
-				if(pointer == root)
-				{
-					root = successor;
-					successor->parent = nullptr;
-
-					if(pointer->left != successor)
-					{
-						successor->left = pointer->left;
-					}
-
-					if(pointer->right != successor)
-					{
-						successor->right = pointer->right;
-					}
-
-					delete pointer;
-					return;
-				}
-
-				if(pointer->parent->left == pointer)
-				{
-					pointer->parent->left = successor;
-				}
-				else if(pointer->parent->right == pointer)
-				{
-					pointer->parent->right = successor;
-				}
-
-				if(pointer->left != successor)
-				{
-					successor->left = pointer->left;
-				}
-
-				if(pointer->right != successor)
-				{
-					successor->right = pointer->right;
-				}
-
-				if(successor == pointer->right->left)
-				{
-					pointer->right->left = nullptr;
-				}
-
-				delete pointer;
-				return;
+				Remove_Branch(pointer, successor);
 			}
 		}
 
 	private:
-		void Print(Node* node)
+		void Print(Node* node) const noexcept
 		{
 			if(node == nullptr)
 			{
@@ -255,8 +142,13 @@ namespace Data_Structures
 			Print(node->right);
 		}
 
-		Node* Node_Pointer(const T& data) noexcept
+		Node* Node_Pointer(const T& data) const noexcept
 		{
+			if(root == nullptr)
+			{
+				return nullptr;
+			}
+
 			Node* pointer = root;
 
 			while(true)
@@ -295,7 +187,7 @@ namespace Data_Structures
 			}
 		}
 
-		Node* Node_Successor(const Node* node)
+		Node* Node_Successor(const Node* node) const noexcept
 		{
 			if(node->left == nullptr && node->right == nullptr)
 			{
@@ -305,23 +197,92 @@ namespace Data_Structures
 			{
 				return node->left;
 			}
-			else if(node->left == nullptr && node->right != nullptr)
+			else if(node->right != nullptr && node->right->left == nullptr)
 			{
 				return node->right;
 			}
-			else if(node->left != nullptr && node->right != nullptr)
+			else if(node->right != nullptr && node->right->left != nullptr)
 			{
-				if(node->right->left != nullptr)
+				return node->right->left;
+			}
+			else
+			{
+				return nullptr;
+			}
+		}
+
+		void Remove_Leaf(const Node* node)
+		{
+			if(node == root)
+			{
+				delete root;
+				min_value = {};
+				max_value = {};
+				root = nullptr;
+				return;
+			}
+			else if(node != root)
+			{
+				if(node == node->parent->left)
 				{
-					return node->right->left;
+					if(node->data == min_value)
+					{
+						min_value = node->parent->data;
+					}
+
+					node->parent->left = nullptr;
+			    	delete node;
+					return;
 				}
-				else if(node->right->left == nullptr)
+				else if(node == node->parent->right)
 				{
-					return node->right;
+					if(node->data == max_value)
+					{
+						max_value = node->parent->data;
+					}
+
+					node->parent->right = nullptr;
+			    	delete node;
+					return;
 				}
 			}
+		}
 
-			return nullptr;
+		void Remove_Branch(const Node* node, const Node* successor)
+		{
+			if(node == root)
+			{
+				delete root;
+				min_value = {};
+				max_value = {};
+				root = nullptr;
+				return;
+			}
+			else if(node != root)
+			{
+				if(node == node->parent->left)
+				{
+					if(node->data == min_value)
+					{
+						min_value = node->parent->data;
+					}
+
+					node->parent->left = nullptr;
+			    	delete node;
+					return;
+				}
+				else if(node == node->parent->right)
+				{
+					if(node->data == max_value)
+					{
+						max_value = node->parent->data;
+					}
+
+					node->parent->right = nullptr;
+			    	delete node;
+					return;
+				}
+			}
 		}
 	};
 }
