@@ -1,8 +1,0 @@
-Node: A unit of data that points to child nodes.
-Root Node: The top central node.
-Parent Node: A node that has child nodes.
-Child Node: A node that has a parent node.
-Leaf Node: A node that has no child nodes.
-Edges: The connections between nodes.
-Tree Height: The number of edges from the root node to the lowest leaf node.
-Node Depth: The number of edges from the root node to the node of interest.

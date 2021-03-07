@@ -1,4 +1,0 @@
-Min Heap
-
-Invariant: A Min Heap must be a tree structure in which all child nodes must be
-greater than or equal to it's parent node.

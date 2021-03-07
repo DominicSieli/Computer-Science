@@ -1,9 +1,0 @@
-Functions
-- Construct()      O(n)
-- Union()          a(n)
-- Find()           a(n)
-- ComponentSize()  a(n)
-- IsConnected()    a(n)
-- Count()          O(1)
-
-a = lower-case (alpha) denotes amortized constant time.

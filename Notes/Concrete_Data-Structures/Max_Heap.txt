@@ -1,4 +1,0 @@
-Max Heap
-
-Invariant: A Max Heap must be a tree structure in which all child nodes must be
-less than or equal to it's parent node.
