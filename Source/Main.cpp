@@ -1,36 +1,23 @@
-#include <vector>
+#include <string>
 #include <iomanip>
 #include <iostream>
 
-#include "Binary_Search_Tree.h"
+#include "Hash_Table.h"
 
-Data_Structures::Binary_Search_Tree<int> bst;
-std::vector<int> vector {12, 7, 16, 2, 20, 18, 19, 24};
+Data_Structures::Hash_Table<10, int, std::string>* hash_table = new Data_Structures::Hash_Table<10, int, std::string>();
 
 int main()
 {
-	for(auto x : vector)
-	{
-		bst.Insert(x);
-	}
+	std::cout << "Table is empty: " << std::boolalpha << hash_table->Empty() << '\n';
 
-	bst.Print();
+	hash_table->Insert(1, "Dominic");
 
-	std::cout << '\n';
+	std::cout << hash_table->Search(1) << '\n';
 
-	for(auto x : vector)
-	{
-		bst.Remove(x);
-	}
+	hash_table->Remove(1);
 
-	bst.Print();
+	std::cout << hash_table->Search(1) << '\n';
 
-	std::cout << '\n';
-
-	for(auto x : vector)
-	{
-		std::cout << "Contains " << x << ": " << std::boolalpha << bst.Contains(x) << '\n';
-	}
-
+	std::cout << "Table is empty: " << std::boolalpha << hash_table->Empty() << '\n';
 	std::cin.get();
 }
