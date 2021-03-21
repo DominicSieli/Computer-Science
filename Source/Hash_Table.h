@@ -1,22 +1,30 @@
 #pragma once
 
 #include <list>
+#include <string>
 
 namespace Data_Structures
 {
-    template<unsigned int S, typename K, typename V>
+    template<unsigned int S, typename V>
     class Hash_Table
     {
     private:
-        std::list<std::pair<K, V>> table[S];
+        std::list<std::pair<std::string, V>> table[S];
 
-        unsigned int Hash_Function(const K& key)
+        unsigned int Hash_Function(std::string key)
         {
-            return (unsigned int)key % S;
+            unsigned int hash_key = 0;
+
+            for(const char& chr : key)
+            {
+                hash_key += (unsigned int)chr;
+            }
+
+            return hash_key % S;
         }
 
     public:
-        void Insert(const K& key, const V& value)
+        void Insert(std::string key, V value)
         {
             bool key_found = false;
             unsigned int hash_key = Hash_Function(key);
@@ -36,7 +44,7 @@ namespace Data_Structures
             }
         }
 
-        V Search(const K& key)
+        V Search(std::string key)
         {
             unsigned int hash_key = Hash_Function(key);
 
@@ -51,7 +59,7 @@ namespace Data_Structures
             return {};
         }
 
-        void Remove(const K& key)
+        void Remove(std::string key)
         {
             unsigned int hash_key = Hash_Function(key);
             auto& cell = table[hash_key];
@@ -73,14 +81,9 @@ namespace Data_Structures
             for(unsigned int i = 0; i < S; ++i)
             {
                 total += (unsigned int)table[i].size();
-
-                if(total > 0)
-                {
-                    return false;
-                }
             }
 
-            return true;
+            return !total;
         }
     };
 }
