@@ -45,6 +45,26 @@ namespace Data_Structures
 			vector = nullptr;
 		}
 
+		T& operator[](const unsigned long long& index) const
+		{
+			return vector[index];
+		}
+
+		constexpr T& operator[](const unsigned long long& index)
+		{
+			return vector[index];
+		}
+
+		void operator=(const std::initializer_list<T>& list)
+		{
+			Delete();
+
+			for(const T& data : list)
+			{
+				Add(data);
+			}
+		}
+
 		constexpr unsigned long long Size() const noexcept
 		{
 			return size;
@@ -55,20 +75,17 @@ namespace Data_Structures
 			return count;
 		}
 
-		void Fill(const T& data) noexcept
+		void Fill(const T& data)
 		{
-			if(size > 0)
-			{
-				count = size;
+			count = size;
 
-				for(unsigned long long index = 0; index < size; index++)
-				{
-					vector[index] = data;
-				}
+			for(unsigned long long index = 0; index < size; index++)
+			{
+				vector[index] = data;
 			}
 		}
 
-		void Clear() noexcept
+		void Clear()
 		{
 			count = 0;
 
@@ -78,7 +95,7 @@ namespace Data_Structures
 			}
 		}
 
-		void Delete() noexcept
+		void Delete()
 		{
 			size = 0;
 			count = 0;
@@ -86,7 +103,7 @@ namespace Data_Structures
 			vector = nullptr;
 		}
 
-		void Trim() noexcept
+		void Trim()
 		{
 			size = count;
 
@@ -101,28 +118,7 @@ namespace Data_Structures
 			vector = new_vector;
 		}
 
-		void Add(const T& data, const unsigned long long& expansion = 1) noexcept
-		{
-			count++;
-
-			if(count > size)
-			{
-				size += expansion;
-				T* new_vector = new T[size];
-
-				for(unsigned long long index = 0; index < count; index++)
-				{
-					new_vector[index] = vector[index];
-				}
-
-				delete[] vector;
-				vector = new_vector;
-			}
-
-			vector[count - 1] = data;
-		}
-
-		void Sorted_Add(const T& data, const unsigned long long& expansion = 1) noexcept
+		void Add(const T& data, const unsigned long long& expansion = 1, const bool& sort = false)
 		{
 			count++;
 
@@ -142,84 +138,32 @@ namespace Data_Structures
 
 			vector[count - 1] = data;
 
-			for(unsigned long long i = count - 1; i > 0; i--)
+			if(sort == true)
 			{
-				if(vector[i] < vector[i - 1])
-				{
-					std::swap(vector[i], vector[i - 1]);
-				}
+				Sort();
 			}
 		}
 
-		void Remove(const unsigned long long& index) noexcept
+		void Remove(const unsigned long long& index, const bool& sort = false)
 		{
-			if(count == 0)
-			{
-				return;
-			}
-
 			if(index >= 0 && index < count)
 			{
 				count--;
 				vector[index] = {};
 				std::swap(vector[index], vector[count]);
 			}
-		}
 
-		void Sorted_Remove(const unsigned long long& index) noexcept
-		{
-			if(count == 0)
+			if(sort == true)
 			{
-				return;
-			}
-
-			if(index >= 0 && index < count)
-			{
-				count--;
-				vector[index] = {};
-
-				for(unsigned long long i = index; i < count; i++)
-				{
-				    std::swap(vector[i], vector[i + 1]);
-				}
+				Sort();
 			}
 		}
 
-		void Reverse() noexcept
+		void Reverse()
 		{
-			for(unsigned long long i = 0; i < count / 2; i++)
+			for(unsigned long long index = 0; index < count / 2; index++)
 			{
-				std::swap(vector[i], vector[(count - 1) - i]);
-			}
-		}
-
-		T& operator[](const unsigned long long& index) noexcept
-		{
-			if(index >= 0 && index < count)
-			{
-				return vector[index];
-			}
-
-			return vector[0];
-		}
-
-		constexpr T& operator[](const unsigned long long& index) const noexcept
-		{
-			if(index >= 0 && index < count)
-			{
-				return vector[index];
-			}
-
-			return vector[0];
-		}
-
-		void operator=(const std::initializer_list<T>& list) noexcept
-		{
-			Delete();
-
-			for(const T& data : list)
-			{
-				Add(data);
+				std::swap(vector[index], vector[(count - 1) - index]);
 			}
 		}
 

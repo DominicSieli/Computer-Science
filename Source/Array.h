@@ -12,6 +12,9 @@ namespace Data_Structures
 		unsigned long long count = 0;
 
 	public:
+		Array()
+		{}
+
 		Array(const T& data)
 		{
 			Fill(data);
@@ -28,6 +31,26 @@ namespace Data_Structures
 		~Array()
 		{}
 
+		T& operator[](const unsigned long long& index) const
+		{
+			return array[index];
+		}
+
+		constexpr T& operator[](const unsigned long long& index)
+		{
+			return array[index];
+		}
+
+		void operator=(const std::initializer_list<T>& list)
+		{
+			Clear();
+
+			for(const T& data : list)
+			{
+				Add(data);
+			}
+		}
+
 		constexpr unsigned long long Size() const noexcept
 		{
 			return S;
@@ -38,7 +61,7 @@ namespace Data_Structures
 			return count;
 		}
 
-		void Fill(const T& data) noexcept
+		void Fill(const T& data)
 		{
 			count = S;
 
@@ -48,7 +71,7 @@ namespace Data_Structures
 			}
 		}
 
-		void Clear() noexcept
+		void Clear()
 		{
 			count = 0;
 
@@ -58,16 +81,7 @@ namespace Data_Structures
 			}
 		}
 
-		void Add(const T& data) noexcept
-		{
-			if(count < S)
-			{
-				count++;
-				array[count - 1] = data;
-			}
-		}
-
-		void Sorted_Add(const T& data) noexcept
+		void Add(const T& data, const bool& sort = false)
 		{
 			if(count < S)
 			{
@@ -75,97 +89,32 @@ namespace Data_Structures
 				array[count - 1] = data;
 			}
 
-			for(unsigned long long i = count - 1; i > 0; i--)
+			if(sort == true)
 			{
-				if(array[i] < array[i - 1])
-				{
-					std::swap(array[i], array[i - 1]);
-				}
+				Sort();
 			}
 		}
 
-		void Remove(const unsigned long long& index) noexcept
+		void Remove(const unsigned long long& index, const bool& sort = false)
 		{
-			if(count == 0)
-			{
-				return;
-			}
-
 			if(index >= 0 && index < count)
 			{
 				count--;
 				array[index] = {};
 				std::swap(array[index], array[count]);
 			}
-		}
 
-		void Sorted_Remove(const unsigned long long& index) noexcept
-		{
-			if(count == 0)
+			if(sort == true)
 			{
-				return;
-			}
-
-			if(index >= 0 && index < count)
-			{
-				count--;
-				array[index] = {};
-
-				for(unsigned long long i = index; i < count; i++)
-				{
-				    std::swap(array[i], array[i + 1]);
-				}
+				Sort();
 			}
 		}
 
-		void Reverse() noexcept
+		void Reverse()
 		{
 			for(unsigned long long i = 0; i < count / 2; i++)
 			{
 				std::swap(array[i], array[(count - 1) - i]);
-			}
-		}
-
-		T& operator[](const unsigned long long& index) noexcept
-		{
-			if(index < 0)
-			{
-				return array[0];
-			}
-
-			if(index >= count)
-			{
-				return array[count - 1];
-			}
-
-			return array[index];
-		}
-
-		constexpr T& operator[](const unsigned long long& index) const noexcept
-		{
-			if(index < 0)
-			{
-				return array[0];
-			}
-
-			if(index >= count)
-			{
-				return array[count - 1];
-			}
-
-			return array[index];
-		}
-
-		void operator=(const std::initializer_list<T>& list) noexcept
-		{
-			Clear();
-
-			for(const T& data : list)
-			{
-				if(count < S)
-				{
-					Add(data);
-				}
 			}
 		}
 
