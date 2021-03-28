@@ -33,10 +33,10 @@ namespace Data_Structures
 			count++;
 			Node* node = new Node(data);
 
-			if(front == nullptr)
+			if(back == nullptr || front == nullptr)
 			{
-				front = node;
 				back = node;
+				front = node;
 			}
 			else
 			{
@@ -52,8 +52,8 @@ namespace Data_Structures
 			if(front != nullptr)
 			{
 				count--;
-				data = front->data;
 				Node* node = front;
+				data = front->data;
 				front = front->next;
 				delete node;
 			}

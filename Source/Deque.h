@@ -26,99 +26,116 @@ namespace Data_Structures
 
 		~Deque()
 		{
-			Clear();
+			Delete();
 		}
 
-		void Enqueue_Back(const T& data) noexcept
+		void Enqueue_Back(const T& data)
 		{
-			if(front == nullptr)
-			{
-				Enqueue_Front(data);
-				return;
-			}
-
 			count++;
 			Node* node = new Node(data, nullptr, back);
-			back->next = node;
-			back = node;
+
+			if(back == nullptr || front == nullptr)
+			{
+				back = node;
+				front = node;
+			}
+			else
+			{
+				back->next = node;
+				back = node;
+			}
 		}
 
-		void Enqueue_Front(const T& data) noexcept
+		void Enqueue_Front(const T& data)
 		{
 			count++;
 			Node* node = new Node(data, front, nullptr);
 
-			if(front != nullptr)
+			if(back == nullptr || front == nullptr)
+			{
+				back = node;
+				front = node;
+			}
+			else
 			{
 				front->previous = node;
+				front = node;
 			}
+		}
 
-			front = node;
+		constexpr T Dequeue_Back()
+		{
+			T data {};
+
+			if(back != nullptr)
+			{
+				count--;
+				Node* node = back;
+				data = back->data;
+				back = back->previous;
+				delete node;
+			}
 
 			if(back == nullptr)
 			{
-				back = front;
-			}
-		}
-
-		T Dequeue_Back() noexcept
-		{
-			if(front == nullptr)
-			{
-				return {};
+				front = nullptr;
 			}
 
-			if(count == 1)
-			{
-				return Dequeue_Front();
-			}
-
-			count--;
-			Node* node = back;
-			T data = back->data;
-			back = back->previous;
-			back->next = nullptr;
-			delete node;
 			return data;
 		}
 
-	    T Dequeue_Front() noexcept
+	    constexpr T Dequeue_Front()
 		{
-			if(front == nullptr)
-			{
-				return {};
-			}
-
-			count--;
-			Node* node = front;
-			T data = front->data;
-			front = front->next;
+			T data {};
 
 			if(front != nullptr)
 			{
-				front->previous = nullptr;
+				count--;
+				Node* node = front;
+				data = front->data;
+				front = front->next;
+				delete node;
 			}
 
-			delete node;
+			if(front == nullptr)
+			{
+				back = nullptr;
+			}
+
 			return data;
 		}
 
-		T Back() const noexcept
+		constexpr T Front() const
 		{
-			return back->data;
+			if(front != nullptr)
+			{
+				return front->data;
+			}
+
+			return {};
 		}
 
-		T Front() const noexcept
+		constexpr T Back() const
 		{
-			return front->data;
+			if(back != nullptr)
+			{
+				return back->data;
+			}
+
+			return {};
 		}
 
-		bool Empty() const noexcept
+		constexpr bool Empty() const
 		{
 			return front == nullptr;
 		}
 
-		void Clear() noexcept
+		constexpr unsigned long long Count() const
+		{
+			return count;
+		}
+
+		void Delete()
 		{
 			while(front != nullptr)
 			{
@@ -127,6 +144,9 @@ namespace Data_Structures
 				front = front->next;
 				delete node;
 			}
+
+			back = nullptr;
+			front = nullptr;
 		}
 	};
 }
