@@ -45,12 +45,12 @@ namespace Data_Structures
 			vector = nullptr;
 		}
 
-		T& operator[](const unsigned long long& index) const
+		T& operator[](const unsigned long long& index)
 		{
 			return vector[index];
 		}
 
-		constexpr T& operator[](const unsigned long long& index)
+		constexpr T operator[](const unsigned long long& index) const
 		{
 			return vector[index];
 		}
@@ -65,12 +65,12 @@ namespace Data_Structures
 			}
 		}
 
-		constexpr unsigned long long Size() const noexcept
+		constexpr unsigned long long Size() const
 		{
 			return size;
 		}
 
-		constexpr unsigned long long Count() const noexcept
+		constexpr unsigned long long Count() const
 		{
 			return count;
 		}

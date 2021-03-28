@@ -31,12 +31,12 @@ namespace Data_Structures
 		~Array()
 		{}
 
-		T& operator[](const unsigned long long& index) const
+		T& operator[](const unsigned long long& index)
 		{
 			return array[index];
 		}
 
-		constexpr T& operator[](const unsigned long long& index)
+		constexpr T operator[](const unsigned long long& index) const
 		{
 			return array[index];
 		}
@@ -51,12 +51,12 @@ namespace Data_Structures
 			}
 		}
 
-		constexpr unsigned long long Size() const noexcept
+		constexpr unsigned long long Size() const
 		{
 			return S;
 		}
 
-		constexpr unsigned long long Count() const noexcept
+		constexpr unsigned long long Count() const
 		{
 			return count;
 		}

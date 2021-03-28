@@ -24,17 +24,17 @@ namespace Data_Structures
 
 		~Stack()
 		{
-			Clear();
+			Delete();
 		}
 
-		void Push(const T& data) noexcept
+		void Push(const T& data)
 		{
 			count++;
 			Node* node = new Node(data, top);
 			top = node;
 		}
 
-		T Pop() noexcept
+		constexpr T Pop()
 		{
 			if(top != nullptr)
 			{
@@ -49,17 +49,27 @@ namespace Data_Structures
 			return {};
 		}
 
-		T Top() const noexcept
+		constexpr T Top() const
 		{
-			return top->data;
+			if(top != nullptr)
+			{
+				return top->data;
+			}
+
+			return {};
 		}
 
-		bool Empty() const noexcept
+		constexpr bool Empty() const
 		{
 			return top == nullptr;
 		}
 
-		void Clear() noexcept
+		constexpr unsigned long long Count() const
+		{
+			return count;
+		}
+
+		void Delete()
 		{
 			while(top != nullptr)
 			{

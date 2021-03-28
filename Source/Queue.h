@@ -25,17 +25,16 @@ namespace Data_Structures
 
 		~Queue()
 		{
-			Clear();
+			Delete();
 		}
 
-		void Enqueue(const T& data) noexcept
+		void Enqueue(const T& data)
 		{
 			count++;
 			Node* node = new Node(data);
 
 			if(front == nullptr)
 			{
-				node->next = nullptr;
 				front = node;
 				back = node;
 			}
@@ -46,32 +45,58 @@ namespace Data_Structures
 			}
 		}
 
-	    T Dequeue() noexcept
+	    constexpr T Dequeue()
 		{
+			T data {};
+
 			if(front != nullptr)
 			{
 				count--;
-				T data = front->data;
+				data = front->data;
 				Node* node = front;
 				front = front->next;
 				delete node;
-				return data;
+			}
+
+			if(front == nullptr)
+			{
+				back = nullptr;
+			}
+
+			return data;
+		}
+
+		constexpr T Front() const
+		{
+			if(front != nullptr)
+			{
+				return front->data;
 			}
 
 			return {};
 		}
 
-		T Front() const noexcept
+		constexpr T Back() const
 		{
-			return front->data;
+			if(back != nullptr)
+			{
+				return back->data;
+			}
+
+			return {};
 		}
 
-		bool Empty() const noexcept
+		constexpr bool Empty() const
 		{
 			return front == nullptr;
 		}
 
-		void Clear() noexcept
+		constexpr unsigned long long Count() const
+		{
+			return count;
+		}
+
+		void Delete()
 		{
 			while(front != nullptr)
 			{
@@ -80,6 +105,9 @@ namespace Data_Structures
 				front = front->next;
 				delete node;
 			}
+
+			back = nullptr;
+			front = nullptr;
 		}
 	};
 }
