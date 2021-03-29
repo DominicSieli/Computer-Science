@@ -43,7 +43,7 @@ namespace Data_Structures
 
 		~Single_Link_List()
 		{
-			Delete();
+			Delete_List();
 		}
 
 		constexpr bool Empty() const
@@ -56,7 +56,7 @@ namespace Data_Structures
 			return count;
 		}
 
-		void Delete()
+		void Delete_List()
 		{
 			while(head != nullptr)
 			{
@@ -110,7 +110,7 @@ namespace Data_Structures
 
 		void operator=(const Single_Link_List& copy_list)
 		{
-			Delete();
+			Delete_List();
 
 			Node* node = copy_list.head;
 
@@ -123,7 +123,7 @@ namespace Data_Structures
 
 		void operator=(const std::initializer_list<T>& list)
 		{
-			Delete();
+			Delete_List();
 
 			for(const T& data : list)
 			{
@@ -174,7 +174,7 @@ namespace Data_Structures
 		{
 			if(tail != nullptr)
 			{
-				if(count == 1)
+				if(tail == head)
 				{
 					Delete_Head();
 					return;
@@ -193,11 +193,6 @@ namespace Data_Structures
 				tail = previous_node;
 				tail->next = nullptr;
 				delete node;
-			}
-
-			if(tail == nullptr)
-			{
-				head = nullptr;
 			}
 		}
 
@@ -243,8 +238,7 @@ namespace Data_Structures
 		void Insert_Head(const T& data)
 		{
 			count++;
-			Node* node = new Node(data);
-			node->next = head;
+			Node* node = new Node(data, head);
 			head = node;
 
 			if(count == 1)
@@ -297,11 +291,6 @@ namespace Data_Structures
 			count++;
 			node->next = previous_node->next;
 			previous_node->next = node;
-
-			if(count == 1)
-			{
-				tail = head;
-			}
 		}
 
 		void Reverse()
