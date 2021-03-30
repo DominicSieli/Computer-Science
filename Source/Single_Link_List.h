@@ -220,18 +220,17 @@ namespace Data_Structures
 				return;
 			}
 
+			count--;
+			Node* node = head->next;
 			Node* previous_node = head;
 
 			for(unsigned long long i = 0; i < index - 1; i++)
 			{
+				node = node->next;
 				previous_node = previous_node->next;
 			}
 
-			Node* node = previous_node->next;
-			Node* next_node = node->next;
-
-			count--;
-			previous_node->next = next_node;
+			previous_node->next = node->next;
 			delete node;
 		}
 
@@ -249,7 +248,7 @@ namespace Data_Structures
 
 		void Insert_Tail(const T& data)
 		{
-			if(head == nullptr)
+			if(tail == nullptr)
 			{
 				Insert_Head(data);
 				return;
@@ -280,16 +279,15 @@ namespace Data_Structures
 				return;
 			}
 
+			count++;
 			Node* previous_node = head;
-			Node* node = new Node(data);
 
 			for(unsigned long long i = 0; i < index - 1; i++)
 			{
 				previous_node = previous_node->next;
 			}
 
-			count++;
-			node->next = previous_node->next;
+			Node* node = new Node(data, previous_node->next);
 			previous_node->next = node;
 		}
 
@@ -300,8 +298,8 @@ namespace Data_Structures
 				return;
 			}
 
-			Node* next = nullptr;
 			Node* current = head;
+			Node* next = head->next;
 			Node* previous = nullptr;
 
 			while(current != nullptr)
