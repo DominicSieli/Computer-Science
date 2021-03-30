@@ -1,6 +1,10 @@
-**.o
+/*
+!LICENSE
+!.gitignore
 
-**/Scripts/
-**/File_IO/
-**/Binaries/
-**/Assembly/
+/*/
+!/Source/
+
+/Source/*
+!/Source/.h
+!/Source/.cpp
