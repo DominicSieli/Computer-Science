@@ -1,6 +1,7 @@
 #pragma once
 
-#include <iostream>
+#include <queue>
+#include <vector>
 
 namespace Data_Structures
 {
@@ -28,20 +29,58 @@ namespace Data_Structures
 		~Binary_Search_Tree()
 		{}
 
-		void Print()
-        {
-			if(root == nullptr)
-			{
-				return;
-			}
-
-            Print(root);
-            std::cout << '\n';
-        }
-
 		bool Contains(const T& data)
 		{
 			return Node_Pointer(data);
+		}
+
+		std::vector<T> Depth_First_Search_In_Order()
+		{
+			std::vector<T> vector;
+			Traverse_In_Order(root, vector);
+			return vector;
+		}
+
+		std::vector<T> Depth_First_Search_Pre_Order()
+		{
+			std::vector<T> vector;
+			Traverse_Pre_Order(root, vector);
+			return vector;
+		}
+
+		std::vector<T> Depth_First_Search_Post_Order()
+		{
+			std::vector<T> vector;
+			Traverse_Post_Order(root, vector);
+			return vector;
+		}
+
+		std::vector<T> Breadth_First_Search()
+		{
+			Node* node = root;
+			std::vector<T> vector;
+			std::queue<Node*> queue;
+
+			queue.push(node);
+
+			while(queue.size() > 0)
+			{
+				node = queue.front();
+				queue.pop();
+				vector.push_back(node->data);
+
+				if(node->left != nullptr)
+				{
+					queue.push(node->left);
+				}
+
+				if(node->right != nullptr)
+				{
+					queue.push(node->right);
+				}
+			}
+
+			return vector;
 		}
 
 		void Insert(const T& data)
@@ -155,17 +194,50 @@ namespace Data_Structures
 		}
 
 	private:
-		void Print(Node* node)
-        {
-            if(node == nullptr)
-            {
-                return;
-            }
+		void Traverse_Pre_Order(Node* node, std::vector<T>& vector)
+		{
+			vector.push_back(node->data);
 
-            Print(node->left);
-            std::cout << node->data << " ";
-            Print(node->right);
-        }
+			if(node->left != nullptr)
+			{
+				Traverse_Pre_Order(node->left, vector);
+			}
+
+			if(node->right != nullptr)
+			{
+				Traverse_Pre_Order(node->right, vector);
+			}
+		}
+
+		void Traverse_In_Order(Node* node, std::vector<T>& vector)
+		{
+			if(node->left != nullptr)
+			{
+				Traverse_In_Order(node->left, vector);
+			}
+
+			vector.push_back(node->data);
+
+			if(node->right != nullptr)
+			{
+				Traverse_In_Order(node->right, vector);
+			}
+		}
+
+		void Traverse_Post_Order(Node* node, std::vector<T>& vector)
+		{
+			if(node->left != nullptr)
+			{
+				Traverse_Post_Order(node->left, vector);
+			}
+
+			if(node->right != nullptr)
+			{
+				Traverse_Post_Order(node->right, vector);
+			}
+
+			vector.push_back(node->data);
+		}
 
 		Node* Node_Pointer(const T& data)
 		{
