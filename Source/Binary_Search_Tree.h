@@ -26,6 +26,9 @@ namespace Data_Structures
 		Binary_Search_Tree()
 		{}
 
+		Binary_Search_Tree(const T& data) : root{new Node(data)}
+        {}
+
 		~Binary_Search_Tree()
 		{}
 
