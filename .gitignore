@@ -3,8 +3,8 @@
 !.gitignore
 
 /*/
-!/Source/
+!/Source
 
 /Source/*
-!/Source/.h
-!/Source/.cpp
+!/Source/*.h
+!/Source/*.cpp
