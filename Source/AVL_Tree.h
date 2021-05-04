@@ -213,9 +213,9 @@ namespace Data_Structures
 				}
 
 				node->height = std::max(Height(node->left), Height(node->right)) + 1;
-
-				return node;
 			}
+
+			return node;
 		}
 
 		Node* Remove(Node* node, const T& data)
@@ -243,9 +243,9 @@ namespace Data_Structures
 				}
 				else
 				{
-					int successor_data = Successor(data);
-					node->data = successor_data;
-					node->right = Remove(node->right, successor_data);
+					T successor = Successor(data);
+					node->data = successor;
+					node->right = Remove(node->right, successor);
 				}
 			}
 			else if(node->data < data)
