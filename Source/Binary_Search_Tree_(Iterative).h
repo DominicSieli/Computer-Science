@@ -196,6 +196,23 @@ namespace Data_Structures
 			delete node;
 		}
 
+		void Invert()
+		{
+			if(root == nullptr) return;
+
+			std::queue<Node*> que;
+			que.push(root);
+
+			while(!que.empty())
+			{
+				Node* node = que.front();
+				que.pop();
+				std::swap(node->left, node->right);
+				if(node->left) que.push(node->left);
+				if(node->right) que.push(node->right);
+			}
+		}
+
 	private:
 		void Traverse_Pre_Order(Node* node, std::vector<T>& vector)
 		{

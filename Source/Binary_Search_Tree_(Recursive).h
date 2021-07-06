@@ -108,6 +108,11 @@ namespace Data_Structures
             root = Remove(root, data);
         }
 
+        void Invert()
+		{
+			Invert(root);
+		}
+
         T Successor(const T& data)
         {
             Node* node = Search(root, data);
@@ -156,6 +161,14 @@ namespace Data_Structures
 
             return {};
         }
+
+        void Invert(Node* node)
+		{
+			if(node == nullptr) return;
+			std::swap(node->left, node->right);
+			Invert(node->left);
+			Invert(node->right);
+		}
 
         void Traverse_Pre_Order(Node* node, std::vector<T>& vector)
 		{
