@@ -98,10 +98,10 @@ namespace Data_Structures
             return (node == nullptr) ? false : true;
         }
 
-        void Insert(const T& data)
-        {
-            root = Insert(root, data);
-        }
+		void Insert(const T& data)
+		{
+			root = Insert(root, data);
+		}
 
         void Remove(const T& data)
         {
